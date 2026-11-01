@@ -25,7 +25,7 @@ const itemStatusSelectOptions = [
   {
     value: "IN_PROGRESS",
     icon: SquareIcon,
-    iconColor: "violet-2",
+    iconColor: "blue-2",
     iconFill: true,
     label: "In Progress",
   },
@@ -41,6 +41,13 @@ function App() {
       ...formFields,
       [name]: value,
     }));
+  };
+
+  const filteredSelectItemListData = selectItemListData && {
+    ...selectItemListData,
+    items: selectItemListData.items.filter(
+      (item) => filterFields.statusId === undefined || item.statusId === filterFields.statusId,
+    ),
   };
 
   return (
@@ -59,7 +66,7 @@ function App() {
           spacing="1px"
           style={{ overflow: "clip", containerType: "inline-size" }}
         >
-          {selectItemListData?.items.map((item) => (
+          {filteredSelectItemListData?.items.map((item) => (
             <BacklogItem key={item.id} {...item} />
           ))}
         </View>

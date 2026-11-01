@@ -58,16 +58,19 @@ function BacklogItem({
           </Text>
         </View>
       </View>
-      <View horizontal align="middle center" spacing="16px">
+      <View horizontal align="middle justify" spacing="16px">
         <Avatar.Stack>
           {assignees.map((assignee) => (
             <Avatar key={assignee.id} imageOnly name="Mike Austin" />
           ))}
-          <Avatar imageOnly name="Mike Austin" />
-          <Avatar imageOnly name="John Connor" />
         </Avatar.Stack>
         <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
-          <Icon icon={SquareIcon} color="violet-2" size={14} fill="currentColor" />
+          <Icon
+            icon={SquareIcon}
+            color={ItemStatus[statusId].iconColor}
+            size={14}
+            fill="currentColor"
+          />
           <Text bold>{ItemStatus[statusId].label}</Text>
         </View>
       </View>
