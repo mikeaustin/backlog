@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "graphql": "^17.0.2",
+    "lucide-react": "^1.66.0",
+    "onyx-ui": "github:GEMTASK/intuition",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "urql": "^5.0.4"
