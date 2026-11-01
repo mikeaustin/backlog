@@ -36,7 +36,7 @@ function BacklogItem({
     title: string;
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
-    assignees: { id: UserId }[];
+    assignees: { id: UserId; displayName: string }[];
   },
   typeof View<"div">
 >) {
@@ -61,7 +61,12 @@ function BacklogItem({
       <View horizontal align="middle justify" spacing="16px">
         <Avatar.Stack>
           {assignees.map((assignee) => (
-            <Avatar key={assignee.id} imageOnly name="Mike Austin" />
+            <Avatar
+              key={assignee.id}
+              imageOnly
+              name={assignee.displayName}
+              tooltip={`Developer: ${assignee.displayName}`}
+            />
           ))}
         </Avatar.Stack>
         <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
