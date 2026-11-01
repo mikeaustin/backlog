@@ -1,7 +1,7 @@
-import { View, Text, Icon, Avatar } from "onyx-ui"
+import { type Delegate, View, Text, Icon, Avatar } from "onyx-ui"
 import { BookCheckIcon } from "lucide-react"
 
-import { type ItemId, type TeamKeySeqId } from "../../queries/SelectItemListQuery.ts";
+import type { UserId, ItemId, TeamKeySeqId } from "../../queries";
 
 import styles from '../../App.module.css'
 
@@ -17,7 +17,7 @@ function BacklogItem({
   itemsAssignees: { assignee: { id: UserId } }[],
 }, typeof View<"div">>) {
   return (
-    <View horizontal className={styles.BacklogItem} fillColor="white" padding="8px 16px" spacing="12px">
+    <View horizontal id={id} className={styles.BacklogItem} fillColor="white" padding="8px 16px" spacing="12px">
       <View flex spacing="8px">
         <Text fontWeight="600">
           {title}

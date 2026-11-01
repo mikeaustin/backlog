@@ -1,9 +1,6 @@
 import { gql, useQuery } from "urql";
 
-type UserId = string & { readonly __type: unique symbol };
-
-type ItemId = string & { readonly __type: unique symbol };
-type TeamKeySeqId = string & { readonly __type: unique symbol };
+import type { UserId, ItemId, TeamKeySeqId } from ".";
 
 type SelectItemListQuery = {
   items2: {
@@ -16,7 +13,7 @@ type SelectItemListQuery = {
         displayName: string,
       }
     }[],
-  }
+  }[],
 };
 
 const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`

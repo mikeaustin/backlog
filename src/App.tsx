@@ -1,13 +1,10 @@
-import { useState } from 'react'
-import { gql, useQuery } from "urql";
-import { View, Text, Icon, Avatar } from "onyx-ui"
-import { BookCheckIcon } from "lucide-react"
+import { View } from "onyx-ui"
 
-import useSelectItemListQuery from "./queries/SelectItemListQuery";
+import { useSelectItemListQuery } from "./queries";
 
 import BacklogItem from "./components/backlog-item";
 
-import styles from './App.module.css'
+// import styles from './App.module.css'
 
 function App() {
   const selectItemListData = useSelectItemListQuery();
