@@ -1,19 +1,20 @@
 import { View, Text, Icon, Avatar } from "onyx-ui"
 import { BookCheckIcon } from "lucide-react"
 
+import { type ItemId, type TeamKeySeqId } from "../../queries/SelectItemListQuery.ts";
+
 import styles from '../../App.module.css'
 
-type UserId = string & { readonly __type: unique symbol };
-type TeamKeySeqId = string & { readonly __type: unique symbol };
-
 function BacklogItem({
+  id,
   title,
   teamKeySeqId,
-  assignees,
+  itemsAssignees,
 }: Delegate<{
+  id: ItemId,
   title: string,
   teamKeySeqId: TeamKeySeqId,
-  assignees: { assignee: { id: UserId } }[],
+  itemsAssignees: { assignee: { id: UserId } }[],
 }, typeof View<"div">>) {
   return (
     <View horizontal className={styles.BacklogItem} fillColor="white" padding="8px 16px" spacing="12px">
@@ -30,8 +31,8 @@ function BacklogItem({
       </View>
       <View>
         <Avatar.Stack>
-          {assignees.map(assignee => (
-            <Avatar key={assignee.assignee.id} imageOnly name="Mike Austin" />
+          {itemsAssignees.map(itemAssignee => (
+            <Avatar key={itemAssignee.assignee.id} imageOnly name="Mike Austin" />
           ))}
           <Avatar imageOnly name="Mike Austin" />
           <Avatar imageOnly name="John Connor" />

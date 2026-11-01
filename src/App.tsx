@@ -3,30 +3,14 @@ import { gql, useQuery } from "urql";
 import { View, Text, Icon, Avatar } from "onyx-ui"
 import { BookCheckIcon } from "lucide-react"
 
+import useSelectItemListQuery from "./queries/SelectItemListQuery";
+
 import BacklogItem from "./components/backlog-item";
 
 import styles from './App.module.css'
 
-const SELECT_ITEM_LIST = gql`
-  query SelectItemList {
-    items2 {
-      id
-      title
-      teamKeySeqId
-      assignees {
-        assignee {
-          id
-          displayName
-        }
-      }
-    }
-  }
-`;
-
 function App() {
-  const [{ data }] = useQuery({
-    query: SELECT_ITEM_LIST,
-  });
+  const selectItemListData = useSelectItemListQuery();
 
   return (
     <View flex fillColor="gutter" padding="16px">
@@ -37,7 +21,7 @@ function App() {
         spacing="1px"
         style={{ overflow: "clip", containerType: "inline-size" }}
       >
-        {data?.items2.map(item => (
+        {selectItemListData?.items2.map(item => (
           <BacklogItem key={item.id} {...item} />
         ))}
       </View>
