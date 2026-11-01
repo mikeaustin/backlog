@@ -1,4 +1,4 @@
-import { View } from "onyx-ui"
+import { View } from "onyx-ui";
 
 import { useSelectItemListQuery } from "./queries";
 
@@ -18,7 +18,7 @@ function App() {
         spacing="1px"
         style={{ overflow: "clip", containerType: "inline-size" }}
       >
-        {selectItemListData?.items2.map(item => (
+        {selectItemListData?.items2.map((item) => (
           <BacklogItem key={item.id} {...item} />
         ))}
       </View>
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
