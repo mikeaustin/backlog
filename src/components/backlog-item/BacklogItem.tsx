@@ -3,14 +3,17 @@ import { BookCheckIcon } from "lucide-react"
 
 import styles from '../../App.module.css'
 
+type UserId = string & { readonly __type: unique symbol };
 type TeamKeySeqId = string & { readonly __type: unique symbol };
 
 function BacklogItem({
   title,
   teamKeySeqId,
+  assignees,
 }: Delegate<{
   title: string,
   teamKeySeqId: TeamKeySeqId,
+  assignees: { assignee: { id: UserId } }[],
 }, typeof View<"div">>) {
   return (
     <View horizontal className={styles.BacklogItem} fillColor="white" padding="8px 16px" spacing="12px">
@@ -27,6 +30,9 @@ function BacklogItem({
       </View>
       <View>
         <Avatar.Stack>
+          {assignees.map(assignee => (
+            <Avatar key={assignee.assignee.id} imageOnly name="Mike Austin" />
+          ))}
           <Avatar imageOnly name="Mike Austin" />
           <Avatar imageOnly name="John Connor" />
         </Avatar.Stack>

@@ -13,6 +13,12 @@ const SELECT_ITEM_LIST = gql`
       id
       title
       teamKeySeqId
+      assignees {
+        assignee {
+          id
+          displayName
+        }
+      }
     }
   }
 `;
