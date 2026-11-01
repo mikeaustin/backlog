@@ -1,19 +1,20 @@
 import { gql, useQuery } from "urql";
 
-import type { UserId, ItemId, TeamKeySeqId } from ".";
+import type { UserId, ItemId, StatusId, TeamKeySeqId } from ".";
 
 type SelectItemListQuery = {
   items2: {
-    id: ItemId,
-    title: string,
-    teamKeySeqId: TeamKeySeqId,
+    id: ItemId;
+    title: string;
+    statusId: StatusId;
+    teamKeySeqId: TeamKeySeqId;
     itemsAssignees: {
       assignee: {
-        id: UserId,
-        displayName: string,
-      }
-    }[],
-  }[],
+        id: UserId;
+        displayName: string;
+      };
+    }[];
+  }[];
 };
 
 const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
@@ -21,6 +22,7 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
     items2 {
       id
       title
+      statusId
       teamKeySeqId
       itemsAssignees {
         assignee {
@@ -37,7 +39,14 @@ function useSelectItemListQuery() {
     query: SELECT_ITEM_LIST_QUERY,
   });
 
-  return data;
+  return (
+    data && {
+      items: data.items2.map(({ itemsAssignees, ...item }) => ({
+        ...item,
+        assignees: itemsAssignees.map((itemAssignee) => itemAssignee.assignee),
+      })),
+    }
+  );
 }
 
 export default useSelectItemListQuery;
