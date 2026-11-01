@@ -1,30 +1,47 @@
 import { useState } from 'react'
 import { gql, useQuery } from "urql";
-import { View, Text, Icon } from "onyx-ui"
+import { View, Text, Icon, Avatar } from "onyx-ui"
 import { BookCheckIcon } from "lucide-react"
 
-import './App.css'
+import styles from './App.module.css'
 
 const SELECT_ITEM_LIST = gql`
   query SelectItemList {
     items2 {
       id
       title
+      teamKeySeqId
     }
   }
 `;
 
-function BacklogItem() {
+type TeamKeySeqId = string & { readonly __type: unique symbol };
+
+function BacklogItem({
+  title,
+  teamKeySeqId,
+}: Delegate<{
+  title: string,
+  teamKeySeqId: TeamKeySeqId,
+}, typeof View<"div">>) {
   return (
-    <View fillColor="white" padding="8px 16px" spacing="8px">
-      <Text fontWeight="600">
-        Comments can be added to item
-      </Text>
-      <View horizontal align="middle left" spacing="4px">
-        <Icon icon={BookCheckIcon} size={14} />
-        <Text light fontSize="12px">
-          GEM-1
+    <View horizontal className={styles.BacklogItem} fillColor="white" padding="8px 16px" spacing="12px">
+      <View flex spacing="8px">
+        <Text fontWeight="600">
+          {title}x
         </Text>
+        <View horizontal align="middle left" spacing="4px">
+          <Icon bleed icon={BookCheckIcon} size={14} />
+          <Text light fontSize="12px">
+            {teamKeySeqId}
+          </Text>
+        </View>
+      </View>
+      <View>
+        <Avatar.Stack>
+          <Avatar imageOnly name="Mike Austin" />
+          <Avatar imageOnly name="John Connor" />
+        </Avatar.Stack>
       </View>
     </View>
   );
@@ -42,10 +59,11 @@ function App() {
         cornerRadius="4px"
         fillColor="divider"
         spacing="1px"
-        style={{ overflow: "clip" }}
+        style={{ overflow: "clip", containerType: "inline-size" }}
       >
-        <BacklogItem />
-        <BacklogItem />
+        {data?.items2.map(item => (
+          <BacklogItem key={item.id} {...item} />
+        ))}
       </View>
     </View>
   );
