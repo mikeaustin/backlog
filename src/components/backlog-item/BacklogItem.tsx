@@ -2,6 +2,7 @@ import { type Delegate, View, Text, Icon, Avatar } from "onyx-ui";
 import { BookCheckIcon, SquareIcon } from "lucide-react";
 
 import type { UserId, ItemId, StatusId, TeamKeySeqId } from "../../queries";
+import { useSortable } from "../../hooks";
 
 import styles from "../../App.module.css";
 
@@ -30,6 +31,8 @@ function BacklogItem({
   statusId,
   teamKeySeqId,
   assignees,
+  sourceElementRef,
+  onItemSelect,
 }: Delegate<
   {
     id: ItemId;
@@ -37,17 +40,27 @@ function BacklogItem({
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
     assignees: { id: UserId; displayName: string }[];
+    sourceElementRef: React.RefObject<HTMLElement | null>;
+    onItemSelect?: (id: ItemId) => void;
   },
   typeof View<"div">
 >) {
+  const ref = useSortable({ itemId: id, itemOrder: 0 }, sourceElementRef, ({ sourceItemId }) => {
+    console.log(sourceItemId);
+  });
+
   return (
     <View
       horizontal
+      draggable
+      ref={ref}
       id={id}
       className={styles.BacklogItem}
+      cursor="pointer"
       fillColor="white"
       padding="8px 16px"
       spacing="12px"
+      onClick={() => onItemSelect?.(id)}
     >
       <View flex spacing="8px">
         <Text fontWeight="600">{title}</Text>

@@ -3,3 +3,21 @@
     flex-direction: column;
   }
 }
+
+.BacklogItem {
+  &:before {
+    content: "";
+    position: absolute;
+    inset: -2px 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &.top:before {
+    border-top: 3px solid var(--primary-color);
+  }
+
+  &.bottom:before {
+    border-bottom: 3px solid var(--primary-color);
+  }
+}

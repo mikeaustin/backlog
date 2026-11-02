@@ -8,6 +8,7 @@ type SelectItemListQuery = {
     title: string;
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
+    order: number;
     itemsAssignees: {
       assignee: {
         id: UserId;
@@ -19,11 +20,12 @@ type SelectItemListQuery = {
 
 const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
   query SelectItemList {
-    items2 {
+    items2(order_by: { order: asc }) {
       id
       title
       statusId
       teamKeySeqId
+      order
       itemsAssignees {
         assignee {
           id

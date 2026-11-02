@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select } from "onyx-ui";
 import { SquareIcon } from "lucide-react";
 
-import { useSelectItemListQuery } from "./queries";
+import { useSelectItemListQuery, type ItemId } from "./queries";
 
 import BacklogItem from "./components/backlog-item";
+import ModifyItemModal from "./components/modify-item-modal/ModifyItemModal";
 
 // import styles from './App.module.css'
 
@@ -33,6 +34,10 @@ const itemStatusSelectOptions = [
 
 function App() {
   const [filterFields, setFormFields] = useState({ statusId: undefined });
+  const [selectedItemId, setSelectedItemId] = useState<ItemId | undefined>();
+  const [isModifyItemModalVisible, setIsModifyItemModalVisible] = useState(false);
+
+  const sourceElementRef = useRef<HTMLElement | null>(null);
 
   const selectItemListData = useSelectItemListQuery();
 
@@ -41,6 +46,12 @@ function App() {
       ...formFields,
       [name]: value,
     }));
+  };
+
+  const handleItemSelect = (id: ItemId) => {
+    setSelectedItemId(id);
+
+    setIsModifyItemModalVisible(true);
   };
 
   const filteredSelectItemListData = selectItemListData && {
@@ -64,13 +75,24 @@ function App() {
           cornerRadius="4px"
           fillColor="divider"
           spacing="1px"
-          style={{ overflow: "clip", containerType: "inline-size" }}
+          style={{ containerType: "inline-size" }}
         >
           {filteredSelectItemListData?.items.map((item) => (
-            <BacklogItem key={item.id} {...item} />
+            <BacklogItem
+              key={item.id}
+              sourceElementRef={sourceElementRef}
+              {...item}
+              onItemSelect={handleItemSelect}
+            />
           ))}
         </View>
       </Page.Content>
+      {isModifyItemModalVisible && (
+        <ModifyItemModal
+          item={selectItemListData?.items.find((item) => item.id === selectedItemId)}
+          onRequestClose={() => setIsModifyItemModalVisible(false)}
+        />
+      )}
     </Page>
   );
 }
