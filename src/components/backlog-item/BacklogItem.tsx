@@ -25,11 +25,26 @@ const ItemStatus = {
   },
 } as const;
 
+function Flag() {
+  return (
+    <svg
+      className={styles.Flag}
+      height="16"
+      width="16"
+      style={{ position: "absolute", left: 0, top: 0 }}
+    >
+      <polygon points="0,0 16,0 0,16" style={{ fill: "var(--onyx-red-4)", strokeWidth: 3 }} />
+    </svg>
+  );
+}
+
 function BacklogItem({
   id,
   title,
   statusId,
   teamKeySeqId,
+  order,
+  flagged,
   assignees,
   sourceElementRef,
   onItemSelect,
@@ -39,6 +54,8 @@ function BacklogItem({
     title: string;
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
+    order: number;
+    flagged: boolean;
     assignees: { id: UserId; displayName: string }[];
     sourceElementRef: React.RefObject<HTMLElement | null>;
     onItemSelect?: (id: ItemId) => void;
@@ -58,10 +75,11 @@ function BacklogItem({
       className={styles.BacklogItem}
       cursor="pointer"
       fillColor="white"
-      padding="8px 16px"
+      padding="12px 16px"
       spacing="12px"
       onClick={() => onItemSelect?.(id)}
     >
+      {flagged && <Flag />}
       <View flex spacing="8px">
         <Text fontWeight="600">{title}</Text>
         <View horizontal align="middle left" spacing="4px">

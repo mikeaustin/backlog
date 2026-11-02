@@ -62,7 +62,17 @@ function App() {
   };
 
   return (
-    <Page flex id="window">
+    <Page
+      flex
+      id="window"
+      fillColor="divider"
+      style={{
+        width: "100%",
+        maxWidth: 960,
+        margin: "0 auto",
+        boxShadow: "0 0 64px hsla(0, 0%, 0%, 0.1)",
+      }}
+    >
       <View id="overlay" absolute style={{ zIndex: 1000, inset: 0, pointerEvents: "none" }} />
       <Page.Header title="Backlog" style={{ paddingTop: 16 }}>
         <Form fields={filterFields} onFieldChange={handleFilterFormFieldChange}>

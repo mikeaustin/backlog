@@ -9,6 +9,7 @@ type SelectItemListQuery = {
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
     order: number;
+    flagged: boolean;
     itemsAssignees: {
       assignee: {
         id: UserId;
@@ -26,6 +27,7 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
       statusId
       teamKeySeqId
       order
+      flagged
       itemsAssignees {
         itemId
         userId

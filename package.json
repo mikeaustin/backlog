@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@urql/exchange-graphcache": "^9.0.2",
     "graphql": "^17.0.2",
     "lucide-react": "^1.66.0",
     "onyx-ui": "github:GEMTASK/intuition",
