@@ -80,7 +80,12 @@ function App() {
         </Form>
       </Page.Header>
       <Page.Content flex fillColor="gutter" padding="16px">
-        <List className="roundedList" style={{ containerType: "inline-size" }}>
+        <List
+          className="roundedList"
+          style={{ containerType: "inline-size" }}
+          onDragEnter={(event) => event.preventDefault()}
+          onDragOver={(event) => event.preventDefault()}
+        >
           {filteredSelectItemListData?.items.map((item) => (
             <BacklogItem
               key={item.id}

@@ -32,7 +32,10 @@ const useSortable = (
     const handleDragStart = (event: DragEvent) => {
       const currentTarget = event.currentTarget as HTMLElement;
 
-      event.dataTransfer?.setData("application/gemtask", JSON.stringify(data));
+      if (event.dataTransfer) {
+        console.log("here");
+        event.dataTransfer.setData("application/json", JSON.stringify(data));
+      }
 
       sourceElementRef.current = currentTarget;
 
@@ -66,12 +69,14 @@ const useSortable = (
       const currentTarget = event.currentTarget as Element;
 
       setTimeout(() => {
-        currentTarget.classList.remove(styles.top!);
-        currentTarget.classList.remove(styles.bottom!);
+        currentTarget.classList.remove(styles.top);
+        currentTarget.classList.remove(styles.bottom);
       }, 100);
     };
 
     const handleDragDrop = (event: DragEvent) => {
+      event.preventDefault();
+
       sourceElementRef.current = null;
 
       const currentTarget = event.currentTarget as Element;
@@ -79,7 +84,13 @@ const useSortable = (
       const rect = currentTarget.getBoundingClientRect();
       const middle = event.clientY - (rect.top + rect.height / 2);
 
-      const { itemId } = JSON.parse(event.dataTransfer!.getData("application/gemtask"));
+      console.log(
+        ">>>",
+        event.dataTransfer?.types,
+        event.dataTransfer!.getData("application/json"),
+      );
+
+      const { itemId } = JSON.parse(event.dataTransfer!.getData("application/json"));
 
       if (
         currentTarget.classList.contains(styles.top!) ||
@@ -93,7 +104,7 @@ const useSortable = (
         });
       }
 
-      currentTarget.classList.remove(styles.top!);
+      currentTarget.classList.remove(styles.top);
       currentTarget.classList.remove(styles.bottom!);
     };
 

@@ -10,6 +10,12 @@
   }
 }
 
+:global(.is-dragging) [draggable] {
+  & > * {
+    pointer-events: none;
+  }
+}
+
 :global(.roundedList) > [draggable] {
   &:before {
     content: "";
@@ -19,6 +25,7 @@
     right: 0;
     top: -18px;
     z-index: 2;
+    /* background: #ff000010; */
   }
 
   &:after {
