@@ -68,6 +68,8 @@ const useSortable = (
     };
 
     const handleDragDrop = (event: DragEvent) => {
+      sourceElementRef.current = null;
+
       const currentTarget = event.currentTarget as Element;
 
       const rect = currentTarget.getBoundingClientRect();
