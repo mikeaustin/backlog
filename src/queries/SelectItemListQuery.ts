@@ -27,6 +27,8 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
       teamKeySeqId
       order
       itemsAssignees {
+        itemId
+        userId
         assignee {
           id
           displayName

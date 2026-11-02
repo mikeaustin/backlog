@@ -89,7 +89,7 @@ function App() {
       </Page.Content>
       {isModifyItemModalVisible && (
         <ModifyItemModal
-          item={selectItemListData?.items.find((item) => item.id === selectedItemId)}
+          item={selectItemListData?.items.find((item) => item.id === selectedItemId)!}
           onRequestClose={() => setIsModifyItemModalVisible(false)}
         />
       )}
