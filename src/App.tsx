@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { type FieldValue, View, Page, Form, Select } from "onyx-ui";
+import { type FieldValue, View, Page, Form, Select, List } from "onyx-ui";
 import { SquareIcon } from "lucide-react";
 
 import { useSelectItemListQuery, type ItemId } from "./queries";
@@ -80,13 +80,7 @@ function App() {
         </Form>
       </Page.Header>
       <Page.Content flex fillColor="gutter" padding="16px">
-        <View
-          border
-          cornerRadius="4px"
-          fillColor="divider"
-          spacing="1px"
-          style={{ containerType: "inline-size" }}
-        >
+        <List className="roundedList" style={{ containerType: "inline-size" }}>
           {filteredSelectItemListData?.items.map((item) => (
             <BacklogItem
               key={item.id}
@@ -95,7 +89,7 @@ function App() {
               onItemSelect={handleItemSelect}
             />
           ))}
-        </View>
+        </List>
       </Page.Content>
       {isModifyItemModalVisible && (
         <ModifyItemModal

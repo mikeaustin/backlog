@@ -1,0 +1,11 @@
+@container (max-width: 767px) {
+  .BacklogItem {
+    flex-direction: column;
+  }
+}
+
+:global(.roundedList) {
+  :first-child .Flag {
+    border-top-left-radius: 4px;
+  }
+}

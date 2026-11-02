@@ -35,6 +35,8 @@ const useSortable = (
       event.dataTransfer?.setData("application/gemtask", JSON.stringify(data));
 
       sourceElementRef.current = currentTarget;
+
+      document.body.classList.add("is-dragging");
     };
 
     const handleDragOver = (event: DragEvent) => {
@@ -95,11 +97,16 @@ const useSortable = (
       currentTarget.classList.remove(styles.bottom!);
     };
 
+    const handleDragEnd = () => {
+      document.body.classList.remove("is-dragging");
+    };
+
     elementRef.current?.setAttribute("draggable", "true");
 
     elementRef.current?.addEventListener("dragstart", handleDragStart);
     elementRef.current?.addEventListener("dragover", handleDragOver);
     elementRef.current?.addEventListener("dragleave", handleDragLeave);
+    elementRef.current?.addEventListener("dragend", handleDragEnd);
     elementRef.current?.addEventListener("drop", handleDragDrop);
 
     const element = elementRef.current;
@@ -108,6 +115,7 @@ const useSortable = (
       element?.removeEventListener("dragstart", handleDragStart);
       element?.removeEventListener("dragover", handleDragOver);
       element?.removeEventListener("dragleave", handleDragLeave);
+      element?.removeEventListener("dragend", handleDragEnd);
       element?.removeEventListener("drop", handleDragDrop);
     };
   }, [data, onDrop, sourceElementRef]);

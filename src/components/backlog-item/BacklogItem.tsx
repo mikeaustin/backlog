@@ -4,7 +4,7 @@ import { BookCheckIcon, SquareIcon } from "lucide-react";
 import type { UserId, ItemId, StatusId, TeamKeySeqId } from "../../queries";
 import { useSortable } from "../../hooks";
 
-import styles from "../../App.module.css";
+import styles from "./Backlog.module.css";
 
 const ItemStatus = {
   BACKLOG: {
