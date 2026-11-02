@@ -63,8 +63,10 @@ const useSortable = (
     const handleDragLeave = (event: DragEvent) => {
       const currentTarget = event.currentTarget as Element;
 
-      currentTarget.classList.remove(styles.top!);
-      currentTarget.classList.remove(styles.bottom!);
+      setTimeout(() => {
+        currentTarget.classList.remove(styles.top!);
+        currentTarget.classList.remove(styles.bottom!);
+      }, 100);
     };
 
     const handleDragDrop = (event: DragEvent) => {
@@ -99,6 +101,15 @@ const useSortable = (
     elementRef.current?.addEventListener("dragover", handleDragOver);
     elementRef.current?.addEventListener("dragleave", handleDragLeave);
     elementRef.current?.addEventListener("drop", handleDragDrop);
+
+    const element = elementRef.current;
+
+    return () => {
+      element?.removeEventListener("dragstart", handleDragStart);
+      element?.removeEventListener("dragover", handleDragOver);
+      element?.removeEventListener("dragleave", handleDragLeave);
+      element?.removeEventListener("drop", handleDragDrop);
+    };
   }, [data, onDrop, sourceElementRef]);
 
   return elementRef;
