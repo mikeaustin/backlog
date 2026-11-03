@@ -51,7 +51,7 @@ function useUpdateItemOrderMutation() {
 
         if (data && aboveOrBelow === "above") {
           if (data.prevItem[0] === undefined) {
-            updatedOrder = targetItemOrder / 2;
+            updatedOrder = targetItemOrder - 1;
           } else {
             updatedOrder = targetItemOrder - (targetItemOrder - data.prevItem[0].order) / 2;
           }
