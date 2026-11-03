@@ -56,3 +56,5 @@ function useSelectItemListQuery() {
 }
 
 export default useSelectItemListQuery;
+
+export { SELECT_ITEM_LIST_QUERY };
