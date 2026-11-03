@@ -51,6 +51,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     updateItem({
       id: item.id,
       input: {
+        statusId: itemFields.statusId,
         title: itemFields.title,
       },
     });

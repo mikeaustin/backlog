@@ -33,7 +33,7 @@ const itemStatusSelectOptions = [
 ] as const;
 
 function App() {
-  const [filterFields, setFormFields] = useState({ statusId: undefined });
+  const [filterFields, setFormFields] = useState({ statusId: undefined, assigneeId: undefined });
   const [selectedItemId, setSelectedItemId] = useState<ItemId | undefined>();
   const [isModifyItemModalVisible, setIsModifyItemModalVisible] = useState(false);
 
@@ -91,10 +91,27 @@ function App() {
     }
   };
 
+  const itemAssigneeSelectOptions = selectItemListData && [
+    {
+      divider: true,
+      options: [
+        { value: undefined, label: "Any" },
+        { value: null, label: "Not Assigned" },
+      ],
+    },
+    ...selectItemListData.items.flatMap((item) =>
+      item.assignees.map((assignee) => ({ value: assignee.id, label: assignee.displayName })),
+    ),
+  ];
+
   const filteredSelectItemListData = selectItemListData && {
     ...selectItemListData,
     items: selectItemListData.items.filter(
-      (item) => filterFields.statusId === undefined || item.statusId === filterFields.statusId,
+      (item) =>
+        ((filterFields.statusId === undefined || item.statusId === filterFields.statusId) &&
+          (filterFields.assigneeId === undefined ||
+            item.assignees.find((assignee) => assignee.id === filterFields.assigneeId))) ||
+        (filterFields.assigneeId === null && item.assignees.length === 0),
     ),
   };
 
@@ -113,8 +130,9 @@ function App() {
       <View id="overlay" absolute style={{ zIndex: 1000, inset: 0, pointerEvents: "none" }} />
       <Page.Header title="Backlog" style={{ paddingTop: 16 }}>
         <Form fields={filterFields} onFieldChange={handleFilterFormFieldChange}>
-          <View horizontal>
+          <View horizontal spacing="12px">
             <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
+            <SelectField name="assigneeId" label="Assignee" options={itemAssigneeSelectOptions} />
           </View>
         </Form>
       </Page.Header>
