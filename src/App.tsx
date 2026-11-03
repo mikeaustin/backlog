@@ -76,7 +76,9 @@ function App() {
       <View id="overlay" absolute style={{ zIndex: 1000, inset: 0, pointerEvents: "none" }} />
       <Page.Header title="Backlog" style={{ paddingTop: 16 }}>
         <Form fields={filterFields} onFieldChange={handleFilterFormFieldChange}>
-          <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
+          <View horizontal>
+            <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
+          </View>
         </Form>
       </Page.Header>
       <Page.Content flex fillColor="gutter" padding="16px">
