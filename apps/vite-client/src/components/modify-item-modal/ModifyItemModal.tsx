@@ -4,7 +4,7 @@ import { Button, Form, Input, Modal, Select, View } from "onyx-ui";
 import { SquareIcon } from "lucide-react";
 
 import type { useSelectItemListQuery } from "../../queries";
-import useUpdateItemMutation from "../../queries/UpdateItemMutation";
+import { useUpdateItemMutation } from "../../queries";
 
 type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items"][number];
 

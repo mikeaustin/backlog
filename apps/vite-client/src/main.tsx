@@ -1,4 +1,4 @@
-import { cache, StrictMode } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createClient as createUrlClient, Provider as UrqlProvider, fetchExchange } from "urql";
 import { cacheExchange } from "@urql/exchange-graphcache";
@@ -14,6 +14,13 @@ const client = createUrlClient({
     cacheExchange({
       keys: {
         itemsAssignees: (data) => `${data.itemId}-${data.userId}`,
+      },
+      updates: {
+        Mutation: {
+          update_items2_by_pk: (result: any, args: any, cache) => {
+            cache.invalidate({ __typename: "items2", id: args.pk_columns.id });
+          },
+        },
       },
     }),
     fetchExchange,

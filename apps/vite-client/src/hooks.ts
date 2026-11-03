@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
+
 import type { ItemId } from "./queries";
 
 import styles from "./App.module.css";
@@ -9,15 +10,12 @@ type Draggable = {
 
 type Droppable = {
   itemId: ItemId;
-  itemOrder: number;
 };
 
 type Sortable = Draggable & Droppable;
 
 type OnDrop = {
   sourceItemId: ItemId;
-  targetItemId: ItemId;
-  targetItemOrder: number;
   aboveOrBelow: "above" | "below";
 };
 
@@ -33,7 +31,6 @@ const useSortable = (
       const currentTarget = event.currentTarget as HTMLElement;
 
       if (event.dataTransfer) {
-        console.log("here");
         event.dataTransfer.setData("application/json", JSON.stringify(data));
       }
 
@@ -84,12 +81,6 @@ const useSortable = (
       const rect = currentTarget.getBoundingClientRect();
       const middle = event.clientY - (rect.top + rect.height / 2);
 
-      console.log(
-        ">>>",
-        event.dataTransfer?.types,
-        event.dataTransfer!.getData("application/json"),
-      );
-
       const { itemId } = JSON.parse(event.dataTransfer!.getData("application/json"));
 
       if (
@@ -98,8 +89,6 @@ const useSortable = (
       ) {
         onDrop?.({
           sourceItemId: itemId as ItemId,
-          targetItemId: data.itemId,
-          targetItemOrder: data.itemOrder,
           aboveOrBelow: middle <= 0 ? "above" : "below",
         });
       }

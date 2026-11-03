@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select, List } from "onyx-ui";
 import { SquareIcon } from "lucide-react";
 
-import { useSelectItemListQuery, type ItemId } from "./queries";
+import { useSelectItemListQuery, useUpdateItemOrderMutation, type ItemId } from "./queries";
 
 import BacklogItem from "./components/backlog-item";
 import ModifyItemModal from "./components/modify-item-modal/ModifyItemModal";
@@ -40,6 +40,7 @@ function App() {
   const sourceElementRef = useRef<HTMLElement | null>(null);
 
   const selectItemListData = useSelectItemListQuery();
+  const updateItemOrder = useUpdateItemOrderMutation();
 
   const handleFilterFormFieldChange = (name: string, value: FieldValue) => {
     setFormFields((formFields) => ({
@@ -52,6 +53,14 @@ function App() {
     setSelectedItemId(id);
 
     setIsModifyItemModalVisible(true);
+  };
+
+  const handleItemMove = (
+    sourceItemId: ItemId,
+    targetItemOrder: number,
+    aboveOrBelow: "above" | "below",
+  ) => {
+    updateItemOrder(sourceItemId, targetItemOrder, aboveOrBelow);
   };
 
   const filteredSelectItemListData = selectItemListData && {
@@ -94,6 +103,7 @@ function App() {
               sourceElementRef={sourceElementRef}
               {...item}
               onItemSelect={handleItemSelect}
+              onItemMove={handleItemMove}
             />
           ))}
         </List>

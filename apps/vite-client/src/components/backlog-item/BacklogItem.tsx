@@ -48,6 +48,7 @@ function BacklogItem({
   assignees,
   sourceElementRef,
   onItemSelect,
+  onItemMove,
 }: Delegate<
   {
     id: ItemId;
@@ -59,11 +60,16 @@ function BacklogItem({
     assignees: { id: UserId; displayName: string }[];
     sourceElementRef: React.RefObject<HTMLElement | null>;
     onItemSelect?: (id: ItemId) => void;
+    onItemMove?: (
+      sourceItemId: ItemId,
+      targetItemOrder: number,
+      aboveOrBelow: "above" | "below",
+    ) => void;
   },
   typeof View<"div">
 >) {
-  const ref = useSortable({ itemId: id, itemOrder: 0 }, sourceElementRef, ({ sourceItemId }) => {
-    console.log(sourceItemId);
+  const ref = useSortable({ itemId: id }, sourceElementRef, ({ sourceItemId, aboveOrBelow }) => {
+    onItemMove?.(sourceItemId, order, aboveOrBelow);
   });
 
   return (
@@ -85,7 +91,7 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px">
           <Icon bleed icon={BookCheckIcon} size={14} />
           <Text light bold fontSize="12px">
-            {teamKeySeqId}
+            {teamKeySeqId} &nbsp; {id}
           </Text>
         </View>
       </View>
