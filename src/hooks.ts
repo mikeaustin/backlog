@@ -71,7 +71,7 @@ const useSortable = (
       setTimeout(() => {
         currentTarget.classList.remove(styles.top);
         currentTarget.classList.remove(styles.bottom);
-      }, 100);
+      }, 20);
     };
 
     const handleDragDrop = (event: DragEvent) => {
