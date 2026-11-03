@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select, List } from "onyx-ui";
 import { SquareIcon } from "lucide-react";
 
-import { useSelectItemListQuery, useUpdateItemOrderMutation, type ItemId } from "./queries";
+import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "./queries";
 
 import BacklogItem from "./components/backlog-item";
 import ModifyItemModal from "./components/modify-item-modal/ModifyItemModal";
@@ -40,7 +40,7 @@ function App() {
   const sourceElementRef = useRef<HTMLElement | null>(null);
 
   const selectItemListData = useSelectItemListQuery();
-  const updateItemOrder = useUpdateItemOrderMutation();
+  const updateItem = useUpdateItemMutation();
 
   const handleFilterFormFieldChange = (name: string, value: FieldValue) => {
     setFormFields((formFields) => ({
@@ -60,16 +60,35 @@ function App() {
     targetItemOrder: number,
     aboveOrBelow: "above" | "below",
   ) => {
-    // console.log(
-    //   "handleItemMove",
-    //   "\n  sourceItemId:",
-    //   sourceItemId,
-    //   "\n ",
-    //   aboveOrBelow,
-    //   // "\n  targetItemId:", targetItemId
-    // );
+    if (selectItemListData) {
+      const items = selectItemListData.items;
+      const targetItemIndex = items.findIndex((item) => item.sortOrder === targetItemOrder);
 
-    updateItemOrder(sourceItemId, targetItemOrder, aboveOrBelow);
+      let updatedSortOrder;
+
+      if (aboveOrBelow === "above") {
+        if (targetItemIndex > 0) {
+          updatedSortOrder =
+            targetItemOrder - (targetItemOrder - items[targetItemIndex - 1].sortOrder) / 2;
+        } else {
+          updatedSortOrder = targetItemOrder / 2;
+        }
+      } else if (aboveOrBelow === "below") {
+        if (targetItemIndex < items.length - 1) {
+          updatedSortOrder =
+            targetItemOrder + (items[targetItemIndex + 1].sortOrder - targetItemOrder) / 2;
+        } else {
+          updatedSortOrder = targetItemOrder + 1;
+        }
+      }
+
+      updateItem({
+        id: sourceItemId,
+        input: {
+          sortOrder: updatedSortOrder,
+        },
+      });
+    }
   };
 
   const filteredSelectItemListData = selectItemListData && {
