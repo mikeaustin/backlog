@@ -80,7 +80,7 @@ function App() {
           updatedSortOrder =
             targetItemOrder - (targetItemOrder - items[targetItemIndex - 1].sortOrder) / 2;
         } else {
-          updatedSortOrder = targetItemOrder / 2;
+          updatedSortOrder = targetItemOrder - 1;
         }
       } else if (aboveOrBelow === "below") {
         if (targetItemIndex < items.length - 1) {
