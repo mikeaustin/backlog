@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { type FieldValue, View, Page, Form, Select, List } from "onyx-ui";
-import { SquareIcon } from "lucide-react";
+import { type FieldValue, View, Page, Form, Select, List, Button } from "onyx-ui";
+import { SquareIcon, XIcon } from "lucide-react";
 
 import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "./queries";
 
@@ -32,8 +32,13 @@ const itemStatusSelectOptions = [
   },
 ] as const;
 
+const defaultFilterFields = {
+  statusId: undefined,
+  assigneeId: undefined,
+};
+
 function App() {
-  const [filterFields, setFormFields] = useState({ statusId: undefined, assigneeId: undefined });
+  const [filterFields, setFilterFields] = useState(defaultFilterFields);
   const [selectedItemId, setSelectedItemId] = useState<ItemId | undefined>();
   const [isModifyItemModalVisible, setIsModifyItemModalVisible] = useState(false);
 
@@ -43,10 +48,14 @@ function App() {
   const updateItem = useUpdateItemMutation();
 
   const handleFilterFormFieldChange = (name: string, value: FieldValue) => {
-    setFormFields((formFields) => ({
+    setFilterFields((formFields) => ({
       ...formFields,
       [name]: value,
     }));
+  };
+
+  const handleClearFiltersClick = () => {
+    setFilterFields(defaultFilterFields);
   };
 
   const handleItemSelect = (id: ItemId) => {
@@ -104,14 +113,18 @@ function App() {
     ),
   ];
 
+  const areAnyFiltersApplied = Object.values(filterFields).some(
+    (filter) => filter !== undefined && filter !== false,
+  );
+
   const filteredSelectItemListData = selectItemListData && {
     ...selectItemListData,
     items: selectItemListData.items.filter(
       (item) =>
-        ((filterFields.statusId === undefined || item.statusId === filterFields.statusId) &&
-          (filterFields.assigneeId === undefined ||
-            item.assignees.find((assignee) => assignee.id === filterFields.assigneeId))) ||
-        (filterFields.assigneeId === null && item.assignees.length === 0),
+        (filterFields.statusId === undefined || item.statusId === filterFields.statusId) &&
+        (filterFields.assigneeId === undefined ||
+          (filterFields.assigneeId === null && item.assignees.length === 0) ||
+          item.assignees.find((assignee) => assignee.id === filterFields.assigneeId)),
     ),
   };
 
@@ -133,6 +146,9 @@ function App() {
           <View horizontal spacing="12px">
             <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
             <SelectField name="assigneeId" label="Assignee" options={itemAssigneeSelectOptions} />
+            {areAnyFiltersApplied && (
+              <Button round primary icon={XIcon} onClick={handleClearFiltersClick} />
+            )}
           </View>
         </Form>
       </Page.Header>
