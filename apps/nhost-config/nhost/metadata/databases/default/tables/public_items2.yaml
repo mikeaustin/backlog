@@ -1,0 +1,32 @@
+table:
+  name: items2
+  schema: public
+array_relationships:
+  - name: itemsAssignees
+    using:
+      foreign_key_constraint_on:
+        column: itemId
+        table:
+          name: itemsAssignees
+          schema: public
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - title
+        - id
+        - teamKeySeqId
+        - statusId
+        - order
+        - flagged
+      filter: {}
+update_permissions:
+  - role: public
+    permission:
+      columns:
+        - title
+        - statusId
+        - order
+        - flagged
+      filter: {}
+      check: null

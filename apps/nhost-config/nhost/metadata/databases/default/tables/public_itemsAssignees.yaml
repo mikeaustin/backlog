@@ -1,0 +1,17 @@
+table:
+  name: itemsAssignees
+  schema: public
+object_relationships:
+  - name: assignee
+    using:
+      foreign_key_constraint_on: userId
+  - name: item
+    using:
+      foreign_key_constraint_on: itemId
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - itemId
+        - userId
+      filter: {}
