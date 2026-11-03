@@ -51,13 +51,13 @@ function useUpdateItemOrderMutation() {
 
         if (data && aboveOrBelow === "above") {
           if (data.prevItem[0] === undefined) {
-            updatedOrder = targetItemOrder - 0.5;
+            updatedOrder = targetItemOrder / 2;
           } else {
             updatedOrder = targetItemOrder - (targetItemOrder - data.prevItem[0].order) / 2;
           }
         } else if (data && aboveOrBelow === "below") {
           if (data.nextItem[0] === undefined) {
-            updatedOrder = targetItemOrder + 0.5;
+            updatedOrder = targetItemOrder + 1;
           } else {
             updatedOrder = targetItemOrder + (data.nextItem[0].order - targetItemOrder) / 2;
           }

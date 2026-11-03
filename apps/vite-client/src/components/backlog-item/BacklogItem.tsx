@@ -91,7 +91,7 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px">
           <Icon bleed icon={BookCheckIcon} size={14} />
           <Text light bold fontSize="12px">
-            {teamKeySeqId} &nbsp; {id}
+            {teamKeySeqId} &nbsp; {order} &nbsp; {id}
           </Text>
         </View>
       </View>
