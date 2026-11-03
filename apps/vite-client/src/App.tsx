@@ -60,6 +60,15 @@ function App() {
     targetItemOrder: number,
     aboveOrBelow: "above" | "below",
   ) => {
+    // console.log(
+    //   "handleItemMove",
+    //   "\n  sourceItemId:",
+    //   sourceItemId,
+    //   "\n ",
+    //   aboveOrBelow,
+    //   // "\n  targetItemId:", targetItemId
+    // );
+
     updateItemOrder(sourceItemId, targetItemOrder, aboveOrBelow);
   };
 

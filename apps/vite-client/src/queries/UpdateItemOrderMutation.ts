@@ -6,31 +6,31 @@ import { type ItemId, useUpdateItemMutation } from ".";
 type SelectItemOrderQuery = {
   prevItem: {
     id: string;
-    order: number;
+    sortOrder: number;
   }[];
   nextItem: {
     id: string;
-    order: number;
+    sortOrder: number;
   }[];
 };
 
 const SELECT_ITEM_ORDER_QUERY = gql<SelectItemOrderQuery>`
-  query SelectItemOrder($targetItemOrder: numeric!) {
+  query SelectItemOrder($targetItemOrder: float8!) {
     prevItem: items2(
       order_by: { order: desc }
-      where: { order: { _lt: $targetItemOrder } }
+      where: { sortOrder: { _lt: $targetItemOrder } }
       limit: 1
     ) {
       id
-      order
+      sortOrder
     }
     nextItem: items2(
       order_by: { order: asc }
-      where: { order: { _gt: $targetItemOrder } }
+      where: { sortOrder: { _gt: $targetItemOrder } }
       limit: 1
     ) {
       id
-      order
+      sortOrder
     }
   }
 `;
@@ -43,32 +43,36 @@ function useUpdateItemOrderMutation() {
   const updateItemOrder = useMemo(
     () =>
       async (sourceItemId: ItemId, targetItemOrder: number, aboveOrBelow: "above" | "below") => {
-        const { data } = await client.query(SELECT_ITEM_ORDER_QUERY, {
-          targetItemOrder,
-        });
+        const { data } = await client.query(
+          SELECT_ITEM_ORDER_QUERY,
+          {
+            targetItemOrder,
+          },
+          {
+            requestPolicy: "network-only",
+          },
+        );
 
-        let updatedOrder;
+        let updatedSortOrder;
 
         if (data && aboveOrBelow === "above") {
           if (data.prevItem[0] === undefined) {
-            updatedOrder = targetItemOrder - 1;
+            updatedSortOrder = targetItemOrder / 2;
           } else {
-            updatedOrder = targetItemOrder - (targetItemOrder - data.prevItem[0].order) / 2;
+            updatedSortOrder = targetItemOrder - (targetItemOrder - data.prevItem[0].sortOrder) / 2;
           }
         } else if (data && aboveOrBelow === "below") {
           if (data.nextItem[0] === undefined) {
-            updatedOrder = targetItemOrder + 1;
+            updatedSortOrder = targetItemOrder + 1;
           } else {
-            updatedOrder = targetItemOrder + (data.nextItem[0].order - targetItemOrder) / 2;
+            updatedSortOrder = targetItemOrder + (data.nextItem[0].sortOrder - targetItemOrder) / 2;
           }
         }
-
-        console.log(">>>", updatedOrder);
 
         updateItem({
           id: sourceItemId,
           input: {
-            order: updatedOrder,
+            sortOrder: updatedSortOrder,
           },
         });
       },

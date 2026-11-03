@@ -43,7 +43,7 @@ function BacklogItem({
   title,
   statusId,
   teamKeySeqId,
-  order,
+  sortOrder,
   flagged,
   assignees,
   sourceElementRef,
@@ -55,7 +55,7 @@ function BacklogItem({
     title: string;
     statusId: StatusId;
     teamKeySeqId: TeamKeySeqId;
-    order: number;
+    sortOrder: number;
     flagged: boolean;
     assignees: { id: UserId; displayName: string }[];
     sourceElementRef: React.RefObject<HTMLElement | null>;
@@ -69,7 +69,7 @@ function BacklogItem({
   typeof View<"div">
 >) {
   const ref = useSortable({ itemId: id }, sourceElementRef, ({ sourceItemId, aboveOrBelow }) => {
-    onItemMove?.(sourceItemId, order, aboveOrBelow);
+    onItemMove?.(sourceItemId, sortOrder, aboveOrBelow);
   });
 
   return (
@@ -91,7 +91,7 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px">
           <Icon bleed icon={BookCheckIcon} size={14} />
           <Text light bold fontSize="12px">
-            {teamKeySeqId} &nbsp; {order} &nbsp; {id}
+            {teamKeySeqId} &nbsp; {sortOrder} &nbsp; {id}
           </Text>
         </View>
       </View>
