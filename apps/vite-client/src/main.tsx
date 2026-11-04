@@ -8,6 +8,8 @@ import { SELECT_ITEM_LIST_QUERY } from "./queries/SelectItemListQuery.ts";
 import App from "./App.tsx";
 
 import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import BacklogPage from "./pages/BacklogPage.tsx";
 
 const client = createUrlClient({
   url: "https://wuxpisemguzmvqpeucnf.hasura.us-east-1.nhost.run/v1/graphql",
@@ -50,10 +52,28 @@ const client = createUrlClient({
   ],
 });
 
+const router = createBrowserRouter([
+  // {
+  //   path: "login",
+  //   element: <LoginPage />,
+  // },
+  {
+    handle: { breadcrumb: () => "Home" },
+    path: "*",
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <BacklogPage />,
+      },
+    ],
+  },
+]);
+
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <UrqlProvider value={client}>
-    <App />
+    <RouterProvider router={router} />
   </UrqlProvider>,
   // </StrictMode>
 );
