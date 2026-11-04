@@ -1,5 +1,5 @@
 table:
-  name: items2
+  name: items
   schema: public
 array_relationships:
   - name: itemsAssignees

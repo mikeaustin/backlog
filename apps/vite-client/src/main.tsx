@@ -19,7 +19,7 @@ const client = createUrlClient({
       },
       updates: {
         Mutation: {
-          update_items2_by_pk: (result: any, args: any, cache) => {
+          update_items_by_pk: (result: any, args: any, cache) => {
             cache.updateQuery({ query: SELECT_ITEM_LIST_QUERY }, (data) => {
               if (!data) {
                 return null;
@@ -27,7 +27,7 @@ const client = createUrlClient({
 
               return {
                 ...data,
-                items2: data?.items2.toSorted((a, b) => a.sortOrder - b.sortOrder),
+                items: data?.items.toSorted((a, b) => a.sortOrder - b.sortOrder),
               };
             });
           },

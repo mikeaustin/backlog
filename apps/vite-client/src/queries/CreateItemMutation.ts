@@ -7,8 +7,8 @@ type CreateItemMutation = {
 };
 
 const CREATE_ITEM_MUTATION = gql<CreateItemMutation>`
-  mutation CreateItem($input: items2_insert_input!) {
-    insert_items2_one(object: $input) {
+  mutation CreateItem($input: items_insert_input!) {
+    insert_items_one(object: $input) {
       id
       title
       statusId

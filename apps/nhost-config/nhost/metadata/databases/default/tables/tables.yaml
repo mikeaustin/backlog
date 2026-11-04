@@ -12,7 +12,6 @@
 - "!include auth_user_security_keys.yaml"
 - "!include auth_users.yaml"
 - "!include public_items.yaml"
-- "!include public_items2.yaml"
 - "!include public_itemsAssignees.yaml"
 - "!include storage_buckets.yaml"
 - "!include storage_files.yaml"

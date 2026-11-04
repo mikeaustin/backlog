@@ -3,7 +3,7 @@ import { gql, useQuery } from "urql";
 import type { UserId, ItemId, StatusId, TeamKeySeqId } from ".";
 
 type SelectItemListQuery = {
-  items2: {
+  items: {
     id: ItemId;
     title: string;
     statusId: StatusId;
@@ -21,7 +21,7 @@ type SelectItemListQuery = {
 
 const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
   query SelectItemList {
-    items2(order_by: { sortOrder: asc }) {
+    items(order_by: { sortOrder: asc }) {
       id
       title
       statusId
@@ -47,7 +47,7 @@ function useSelectItemListQuery() {
 
   return (
     data && {
-      items: data.items2.map(({ itemsAssignees, ...item }) => ({
+      items: data.items.map(({ itemsAssignees, ...item }) => ({
         ...item,
         assignees: itemsAssignees.map((itemAssignee) => itemAssignee.assignee),
       })),

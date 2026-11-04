@@ -16,8 +16,8 @@ type UpdateItemMutation = {
 };
 
 const UPDATE_ITEM_MUTATION = gql<UpdateItemMutation>`
-  mutation UpdateItem($id: uuid!, $input: items2_set_input) {
-    update_items2_by_pk(_set: $input, pk_columns: { id: $id }) {
+  mutation UpdateItem($id: uuid!, $input: items_set_input) {
+    update_items_by_pk(_set: $input, pk_columns: { id: $id }) {
       id
       title
       statusId
