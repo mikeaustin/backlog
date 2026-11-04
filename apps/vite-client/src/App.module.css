@@ -16,7 +16,7 @@
   }
 }
 
-:global(.roundedList) > [draggable] {
+:global(.is-dragging) :global(.roundedList) > [draggable] {
   &:before {
     content: "";
     position: absolute;

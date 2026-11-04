@@ -19,6 +19,18 @@ const client = createUrlClient({
       },
       updates: {
         Mutation: {
+          insert_items_one: (result: any, args: any, cache) => {
+            cache.updateQuery({ query: SELECT_ITEM_LIST_QUERY }, (data) => {
+              if (!data) {
+                return null;
+              }
+
+              return {
+                ...data,
+                items: [...data.items, result.insert_items_one],
+              };
+            });
+          },
           update_items_by_pk: (result: any, args: any, cache) => {
             cache.updateQuery({ query: SELECT_ITEM_LIST_QUERY }, (data) => {
               if (!data) {
@@ -27,7 +39,7 @@ const client = createUrlClient({
 
               return {
                 ...data,
-                items: data?.items.toSorted((a, b) => a.sortOrder - b.sortOrder),
+                items: data.items.toSorted((a, b) => a.sortOrder - b.sortOrder),
               };
             });
           },
