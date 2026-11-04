@@ -6,6 +6,7 @@ import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "./qu
 
 import BacklogItem from "./components/backlog-item";
 import ModifyItemModal from "./components/modify-item-modal/ModifyItemModal";
+import AddItem from "./components/add-item/AddItem";
 
 // import styles from './App.module.css'
 
@@ -178,6 +179,7 @@ function App() {
               onItemMove={handleItemMove}
             />
           ))}
+          <AddItem />
         </List>
       </Page.Content>
       {isModifyItemModalVisible && (

@@ -5,12 +5,29 @@ type TeamKeySeqId = string & { readonly __type: unique symbol };
 
 type StatusId = "BACKLOG" | "IN_PROGRESS";
 
+type Item = {
+  id: ItemId;
+  title: string;
+  statusId: StatusId;
+  teamKeySeqId: TeamKeySeqId;
+  sortOrder: number;
+  flagged: boolean;
+  itemsAssignees: {
+    assignee: {
+      id: UserId;
+      displayName: string;
+    };
+  }[];
+};
+
 export { default as useSelectItemListQuery } from "./SelectItemListQuery";
 export { default as useUpdateItemMutation } from "./UpdateItemMutation";
 
 export type {
-  UserId, //
+  UserId,
   ItemId,
   StatusId,
   TeamKeySeqId,
+  //
+  Item,
 };
