@@ -15,7 +15,7 @@ const client = createUrlClient({
   exchanges: [
     cacheExchange({
       keys: {
-        itemsAssignees: (data) => `${data.itemId}-${data.userId}`,
+        items_assignees: (data) => `${data.itemId}-${data.userId}`,
       },
       updates: {
         Mutation: {
