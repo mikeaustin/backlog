@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { type FieldValue, View, Page, Form, Select, List, Button } from "onyx-ui";
-import { SquareIcon, XIcon } from "lucide-react";
+import { type FieldValue, View, Page, Form, Select, List, Button, Toggle, Text } from "onyx-ui";
+import { FlagIcon, SquareIcon, XIcon } from "lucide-react";
 
 import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "./queries";
 
@@ -10,6 +10,7 @@ import ModifyItemModal from "./components/modify-item-modal/ModifyItemModal";
 // import styles from './App.module.css'
 
 const SelectField = Form.Field.withComponent(Select);
+const ToggleField = Form.Field.withComponent(Toggle);
 
 const itemStatusSelectOptions = [
   {
@@ -35,6 +36,7 @@ const itemStatusSelectOptions = [
 const defaultFilterFields = {
   statusId: undefined,
   assigneeId: undefined,
+  flagged: false,
 };
 
 function App() {
@@ -124,7 +126,8 @@ function App() {
         (filterFields.statusId === undefined || item.statusId === filterFields.statusId) &&
         (filterFields.assigneeId === undefined ||
           (filterFields.assigneeId === null && item.assignees.length === 0) ||
-          item.assignees.find((assignee) => assignee.id === filterFields.assigneeId)),
+          item.assignees.find((assignee) => assignee.id === filterFields.assigneeId)) &&
+        (filterFields.flagged === false || item.flagged),
     ),
   };
 
@@ -142,13 +145,16 @@ function App() {
     >
       <View id="overlay" absolute style={{ zIndex: 1000, inset: 0, pointerEvents: "none" }} />
       <Page.Header title="Backlog" style={{ paddingTop: 16 }}>
-        <Form fields={filterFields} onFieldChange={handleFilterFormFieldChange}>
+        <Form fields={filterFields} spacing="16px" onFieldChange={handleFilterFormFieldChange}>
           <View horizontal spacing="12px">
             <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
             <SelectField name="assigneeId" label="Assignee" options={itemAssigneeSelectOptions} />
             {areAnyFiltersApplied && (
               <Button round primary icon={XIcon} onClick={handleClearFiltersClick} />
             )}
+          </View>
+          <View horizontal>
+            <ToggleField name="flagged" icon={FlagIcon} iconColor="red-5" children="Flagged" />
           </View>
         </Form>
       </Page.Header>
@@ -159,6 +165,11 @@ function App() {
           onDragEnter={(event) => event.preventDefault()}
           onDragOver={(event) => event.preventDefault()}
         >
+          {filteredSelectItemListData?.items.length === 0 && (
+            <Text fillColor="content" padding="16px">
+              No items found using the current filter
+            </Text>
+          )}
           {filteredSelectItemListData?.items.map((item) => (
             <BacklogItem
               key={item.id}

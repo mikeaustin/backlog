@@ -1,6 +1,6 @@
 @container (max-width: 767px) {
   .BacklogItem {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 }
 

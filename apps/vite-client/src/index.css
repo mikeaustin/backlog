@@ -11,7 +11,7 @@
 }
 
 #root {
-  min-height: 100svh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -19,5 +19,6 @@
 
 body {
   margin: 0;
+  height: 100%;
   background: var(--divider-color);
 }
