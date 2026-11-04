@@ -2,28 +2,10 @@ import { type Delegate, View, Text, Icon, Avatar } from "onyx-ui";
 import { BookCheckIcon, SquareIcon } from "lucide-react";
 
 import type { UserId, ItemId, StatusId } from "../../queries";
+import ItemStatuses from "../../data/ItemStatuses";
 import { useSortable } from "../../hooks";
 
 import styles from "./Backlog.module.css";
-
-const ItemStatus = {
-  BACKLOG: {
-    value: "BACKLOG",
-    label: "Backlog",
-    icon: SquareIcon,
-    iconColor: "gray-4",
-    iconFill: true,
-    tooltip: "Items that are ready to be refined",
-  },
-  IN_PROGRESS: {
-    value: "IN_PROGRESS",
-    label: "In Progress",
-    icon: SquareIcon,
-    iconColor: "blue-2",
-    iconFill: true,
-    tooltip: "Items that are currently in progress",
-  },
-} as const;
 
 function Flag() {
   return (
@@ -107,11 +89,11 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
           <Icon
             icon={SquareIcon}
-            color={ItemStatus[statusId].iconColor}
+            color={ItemStatuses[statusId].iconColor}
             size={14}
             fill="currentColor"
           />
-          <Text bold>{ItemStatus[statusId].label}</Text>
+          <Text bold>{ItemStatuses[statusId].label}</Text>
         </View>
       </View>
     </View>

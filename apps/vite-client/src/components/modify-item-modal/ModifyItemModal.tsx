@@ -1,32 +1,17 @@
 import { useState } from "react";
 import { type Delegate, type FieldValue } from "onyx-ui";
 import { Button, Form, Input, Modal, Select, View } from "onyx-ui";
-import { SquareIcon } from "lucide-react";
 
 import type { useSelectItemListQuery } from "../../queries";
 import { useUpdateItemMutation } from "../../queries";
+import ItemStatuses from "../../data/ItemStatuses";
 
 type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items"][number];
 
 const InputField = Form.Field.withComponent(Input);
 const SelectField = Form.Field.withComponent(Select);
 
-const itemStatusSelectOptions = [
-  {
-    value: "BACKLOG",
-    icon: SquareIcon,
-    iconColor: "gray-4",
-    iconFill: true,
-    label: "Backlog",
-  },
-  {
-    value: "IN_PROGRESS",
-    icon: SquareIcon,
-    iconColor: "blue-2",
-    iconFill: true,
-    label: "In Progress",
-  },
-] as const;
+const itemStatusSelectOptions = [...Object.values(ItemStatuses)] as const;
 
 function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Modal, "title">) {
   const [itemFields, setItemFields] = useState({

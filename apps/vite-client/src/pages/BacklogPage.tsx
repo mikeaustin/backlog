@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select, List, Button, Toggle, Text } from "onyx-ui";
-import { FlagIcon, SquareIcon, XIcon } from "lucide-react";
+import { FlagIcon, XIcon } from "lucide-react";
 
 import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "../queries";
+import ItemStatuses from "../data/ItemStatuses";
 
 import BacklogItem from "../components/backlog-item";
 import ModifyItemModal from "../components/modify-item-modal/ModifyItemModal";
@@ -16,20 +17,7 @@ const itemStatusSelectOptions = [
     divider: true,
     options: [{ value: undefined, label: "Any" }],
   },
-  {
-    value: "BACKLOG",
-    icon: SquareIcon,
-    iconColor: "gray-4",
-    iconFill: true,
-    label: "Backlog",
-  },
-  {
-    value: "IN_PROGRESS",
-    icon: SquareIcon,
-    iconColor: "blue-2",
-    iconFill: true,
-    label: "In Progress",
-  },
+  ...Object.values(ItemStatuses),
 ] as const;
 
 const defaultFilterFields = {
