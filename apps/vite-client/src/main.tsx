@@ -4,12 +4,12 @@ import { createClient as createUrlClient, Provider as UrqlProvider, fetchExchang
 import { cacheExchange } from "@urql/exchange-graphcache";
 
 import { SELECT_ITEM_LIST_QUERY } from "./queries/SelectItemListQuery.ts";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 import App from "./App.tsx";
+import BacklogPage from "./pages/BacklogPage.tsx";
 
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import BacklogPage from "./pages/BacklogPage.tsx";
 
 const client = createUrlClient({
   url: "https://wuxpisemguzmvqpeucnf.hasura.us-east-1.nhost.run/v1/graphql",

@@ -131,16 +131,7 @@ function BacklogPage() {
   };
 
   return (
-    <Page
-      flex
-      id="window"
-      style={{
-        width: "100%",
-        maxWidth: 960,
-        margin: "0 auto",
-        boxShadow: "0 0 64px hsla(0, 0%, 0%, 0.0), 0 0 0 1px var(--divider-color)",
-      }}
-    >
+    <Page flex>
       <Page.Header title="Backlog" style={{ paddingTop: 16 }}>
         <Form fields={filterFields} spacing="16px" onFieldChange={handleFilterFormFieldChange}>
           <View horizontal spacing="12px">
@@ -163,9 +154,9 @@ function BacklogPage() {
           onDragOver={(event) => event.preventDefault()}
         >
           {areAnyFiltersApplied && filteredSelectItemListData?.items.length === 0 && (
-            <Text fillColor="content" padding="16px">
-              No items found using the current filter
-            </Text>
+            <View fillColor="content" padding="4px 0px">
+              <Text padding="16px">No items found using the current filter</Text>
+            </View>
           )}
           {filteredSelectItemListData?.items.map((item) => (
             <BacklogItem
