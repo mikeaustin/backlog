@@ -10,7 +10,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 const client = createUrlClient({
-  url: "https://edfbjhhlywdqsyngkmio.hasura.us-east-1.nhost.run/v1/graphql",
+  url: "https://wuxpisemguzmvqpeucnf.hasura.us-east-1.nhost.run/v1/graphql",
   preferGetMethod: false,
   exchanges: [
     cacheExchange({

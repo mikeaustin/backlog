@@ -9,7 +9,6 @@ type Item = {
   id: ItemId;
   title: string;
   statusId: StatusId;
-  teamKeySeqId: TeamKeySeqId;
   sortOrder: number;
   flagged: boolean;
   itemsAssignees: {

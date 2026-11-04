@@ -165,7 +165,7 @@ function App() {
           onDragEnter={(event) => event.preventDefault()}
           onDragOver={(event) => event.preventDefault()}
         >
-          {filteredSelectItemListData?.items.length === 0 && (
+          {areAnyFiltersApplied && filteredSelectItemListData?.items.length === 0 && (
             <Text fillColor="content" padding="16px">
               No items found using the current filter
             </Text>

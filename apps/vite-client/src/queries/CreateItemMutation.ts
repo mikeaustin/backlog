@@ -12,7 +12,6 @@ const CREATE_ITEM_MUTATION = gql<CreateItemMutation>`
       id
       title
       statusId
-      teamKeySeqId
       sortOrder
       flagged
       itemsAssignees {

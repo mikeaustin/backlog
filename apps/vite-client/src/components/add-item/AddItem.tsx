@@ -33,18 +33,20 @@ function AddItem() {
   };
 
   return (
-    <Form
-      fields={itemFormFields}
-      onFieldChange={handleItemFormFieldChange}
-      onSubmit={handleItemFormSubmit}
-    >
-      <View horizontal fillColor="content" padding="12px 16px" spacing="8px">
-        <InputField borderOnFocus border="bottom" name="title" placeholder="Add an item..." />
-        <Button round primary type="submit">
-          Add Item
-        </Button>
-      </View>
-    </Form>
+    <View fillColor="content">
+      <Form
+        fields={itemFormFields}
+        onFieldChange={handleItemFormFieldChange}
+        onSubmit={handleItemFormSubmit}
+      >
+        <View horizontal padding="12px 16px" spacing="8px">
+          <InputField borderOnFocus border="bottom" name="title" placeholder="Add an item..." />
+          <Button round primary type="submit">
+            Add Item
+          </Button>
+        </View>
+      </Form>
+    </View>
   );
 }
 

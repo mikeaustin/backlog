@@ -1,7 +1,7 @@
 import { type Delegate, View, Text, Icon, Avatar } from "onyx-ui";
 import { BookCheckIcon, SquareIcon } from "lucide-react";
 
-import type { UserId, ItemId, StatusId, TeamKeySeqId } from "../../queries";
+import type { UserId, ItemId, StatusId } from "../../queries";
 import { useSortable } from "../../hooks";
 
 import styles from "./Backlog.module.css";
@@ -42,7 +42,6 @@ function BacklogItem({
   id,
   title,
   statusId,
-  teamKeySeqId,
   sortOrder,
   flagged,
   assignees,
@@ -54,7 +53,6 @@ function BacklogItem({
     id: ItemId;
     title: string;
     statusId: StatusId;
-    teamKeySeqId: TeamKeySeqId;
     sortOrder: number;
     flagged: boolean;
     assignees: { id: UserId; displayName: string }[];
@@ -91,7 +89,7 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px">
           <Icon bleed icon={BookCheckIcon} size={14} />
           <Text light bold fontSize="12px">
-            {teamKeySeqId} &nbsp; {sortOrder}
+            {sortOrder}
           </Text>
         </View>
       </View>

@@ -6,7 +6,6 @@ type Item = {
   id: ItemId;
   title: string;
   statusId: StatusId;
-  teamKeySeqId: TeamKeySeqId;
   sortOrder: number;
   flagged: boolean;
 };
@@ -21,7 +20,6 @@ const UPDATE_ITEM_MUTATION = gql<UpdateItemMutation>`
       id
       title
       statusId
-      teamKeySeqId
       sortOrder
       flagged
       itemsAssignees {
