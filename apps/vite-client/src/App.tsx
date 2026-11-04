@@ -135,12 +135,11 @@ function App() {
     <Page
       flex
       id="window"
-      fillColor="divider"
       style={{
         width: "100%",
         maxWidth: 960,
         margin: "0 auto",
-        boxShadow: "0 0 64px hsla(0, 0%, 0%, 0.1)",
+        boxShadow: "0 0 64px hsla(0, 0%, 0%, 0.2)",
       }}
     >
       <View id="overlay" absolute style={{ zIndex: 1000, inset: 0, pointerEvents: "none" }} />
