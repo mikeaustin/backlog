@@ -7,6 +7,7 @@ type SelectItemListQuery = {
     id: ItemId;
     title: string;
     statusId: StatusId;
+    description: string;
     sortOrder: number;
     flagged: boolean;
     itemsAssignees: {
@@ -24,6 +25,7 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
       id
       title
       statusId
+      description
       sortOrder
       flagged
       itemsAssignees {

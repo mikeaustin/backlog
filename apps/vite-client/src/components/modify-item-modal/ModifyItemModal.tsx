@@ -17,7 +17,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   const [itemFields, setItemFields] = useState({
     title: item.title,
     statusId: item.statusId,
-    description: "",
+    description: item.description,
   });
 
   const updateItem = useUpdateItemMutation();
@@ -25,7 +25,6 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   //
 
   const handleItemFormFieldChange = (name: string, value: FieldValue) => {
-    console.log("here");
     setItemFields((itemFields) => ({
       ...itemFields,
       [name]: value,
@@ -36,8 +35,9 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     updateItem({
       id: item.id,
       input: {
-        statusId: itemFields.statusId,
         title: itemFields.title,
+        statusId: itemFields.statusId,
+        description: itemFields.description,
       },
     });
   };
@@ -49,7 +49,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   ];
 
   return (
-    <Modal title="Modify Item" actions={actions} {...props}>
+    <Modal title="Modify Item" actions={actions} style={{ width: 600 }} {...props}>
       <View>
         <View border="bottom" fillColor="panel" padding="16px" spacing="16px">
           <View horizontal align="middle justify">
@@ -79,7 +79,15 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
         </View>
         <View fillColor="content" padding="16px">
           <Form fields={itemFields} onFieldChange={handleItemFormFieldChange}>
-            <InputField name="description" label="Description" style={{ height: 30 }} />
+            <InputField
+              flush
+              multiline
+              borderOnFocus
+              border="bottom"
+              name="description"
+              label="Notes"
+              placeholder="Details about this item..."
+            />
           </Form>
         </View>
       </View>

@@ -20,6 +20,7 @@ const UPDATE_ITEM_MUTATION = gql<UpdateItemMutation>`
       id
       title
       statusId
+      description
       sortOrder
       flagged
       itemsAssignees {
