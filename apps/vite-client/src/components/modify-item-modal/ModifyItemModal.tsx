@@ -6,6 +6,8 @@ import type { useSelectItemListQuery } from "../../queries";
 import { useUpdateItemMutation } from "../../queries";
 import ItemStatuses from "../../data/ItemStatuses";
 
+import Checklist from "../../shared/checklist";
+
 type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items"][number];
 
 const InputField = Form.Field.withComponent(Input);
@@ -20,6 +22,8 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     description: item.description,
   });
 
+  const [criteria, setCriteria] = useState<Item["criteria"]>(item.criteria);
+
   const updateItem = useUpdateItemMutation();
 
   //
@@ -31,6 +35,12 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     }));
   };
 
+  const handleCriteriaChecklistValueChange = (
+    items: { id: string; checkboxValue: boolean; inputValue: string }[],
+  ) => {
+    setCriteria(items);
+  };
+
   const handleSaveChangesClick = () => {
     updateItem({
       id: item.id,
@@ -38,6 +48,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
         title: itemFields.title,
         statusId: itemFields.statusId,
         description: itemFields.description,
+        criteria: criteria,
       },
     });
   };
@@ -51,7 +62,13 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   return (
     <Modal title="Modify Item" actions={actions} style={{ width: 600 }} {...props}>
       <View>
-        <View border="bottom" fillColor="panel" padding="16px" spacing="16px">
+        <View
+          border="bottom"
+          fillColor="panel"
+          padding="16px"
+          spacing="16px"
+          style={{ paddingBottom: 8 }}
+        >
           <View horizontal align="middle justify">
             <View spacing="8px">
               <Text>ENG-1</Text>
@@ -78,7 +95,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
           </Form>
         </View>
         <View fillColor="content" padding="16px">
-          <Form fields={itemFields} onFieldChange={handleItemFormFieldChange}>
+          <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
             <InputField
               flush
               multiline
@@ -88,6 +105,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
               label="Notes"
               placeholder="Details about this item..."
             />
+            <Checklist items={criteria} onValueChange={handleCriteriaChecklistValueChange} />
           </Form>
         </View>
       </View>

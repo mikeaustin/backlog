@@ -6,8 +6,14 @@ type Item = {
   id: ItemId;
   title: string;
   statusId: StatusId;
+  description: string;
   sortOrder: number;
   flagged: boolean;
+  criteria: {
+    id: string;
+    checkboxValue: boolean;
+    inputValue: string;
+  }[];
 };
 
 type UpdateItemMutation = {
@@ -23,6 +29,7 @@ const UPDATE_ITEM_MUTATION = gql<UpdateItemMutation>`
       description
       sortOrder
       flagged
+      criteria
       itemsAssignees {
         itemId
         userId

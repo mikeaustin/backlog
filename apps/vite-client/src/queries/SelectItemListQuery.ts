@@ -10,6 +10,11 @@ type SelectItemListQuery = {
     description: string;
     sortOrder: number;
     flagged: boolean;
+    criteria: {
+      id: string;
+      checkboxValue: boolean;
+      inputValue: string;
+    }[];
     itemsAssignees: {
       assignee: {
         id: UserId;
@@ -28,6 +33,7 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
       description
       sortOrder
       flagged
+      criteria
       itemsAssignees {
         itemId
         userId
