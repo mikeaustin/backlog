@@ -26,6 +26,7 @@ function BacklogItem({
   statusId,
   sortOrder,
   flagged,
+  criteria,
   assignees,
   sourceElementRef,
   onItemSelect,
@@ -37,6 +38,7 @@ function BacklogItem({
     statusId: StatusId;
     sortOrder: number;
     flagged: boolean;
+    criteria: { checkboxValue: boolean }[];
     assignees: { id: UserId; displayName: string }[];
     sourceElementRef: React.RefObject<HTMLElement | null>;
     onItemSelect?: (id: ItemId) => void;
@@ -91,14 +93,19 @@ function BacklogItem({
             ))}
           </Avatar.Stack>
         </Menu>
-        <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
-          <Icon
-            icon={SquareIcon}
-            color={ItemStatuses[statusId].iconColor}
-            size={14}
-            fill="currentColor"
-          />
-          <Text bold>{ItemStatuses[statusId].label}</Text>
+        <View spacing="8px">
+          <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
+            <Icon
+              icon={SquareIcon}
+              color={ItemStatuses[statusId].iconColor}
+              size={14}
+              fill="currentColor"
+            />
+            <Text bold>{ItemStatuses[statusId].label}</Text>
+          </View>
+          <Text light fontSize="12px" style={{ marginLeft: 18 }}>
+            {criteria.reduce((a, c) => a + +c.checkboxValue, 0)} of {criteria.length} done
+          </Text>
         </View>
       </View>
     </View>

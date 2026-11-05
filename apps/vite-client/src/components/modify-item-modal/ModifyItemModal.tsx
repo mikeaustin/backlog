@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Text, type Delegate, type FieldValue } from "onyx-ui";
-import { Button, Form, Input, Modal, Select, View } from "onyx-ui";
+import { type Delegate, type FieldValue } from "onyx-ui";
+import { Button, Form, Input, Menu, Modal, Select, Text, View } from "onyx-ui";
+import { FlagIcon, TrashIcon } from "lucide-react";
 
 import type { useSelectItemListQuery } from "../../queries";
 import { useUpdateItemMutation } from "../../queries";
@@ -20,6 +21,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     title: item.title,
     statusId: item.statusId,
     description: item.description,
+    flagged: item.flagged,
   });
 
   const [criteria, setCriteria] = useState<Item["criteria"]>(item.criteria);
@@ -48,20 +50,31 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
         title: itemFields.title,
         statusId: itemFields.statusId,
         description: itemFields.description,
+        flagged: itemFields.flagged,
         criteria: criteria,
       },
     });
   };
 
-  const actions = [
+  const modalActions = [
     <Button round solid primary onClick={handleSaveChangesClick}>
       Save Changes
     </Button>,
   ];
 
+  const itemActions = [
+    <Menu.Item
+      icon={FlagIcon}
+      title={item.flagged ? "Unflag Item" : "Flag Item"}
+      onClick={() => handleItemFormFieldChange("flagged", !item.flagged)}
+    />,
+    <Menu.Divider />,
+    <Menu.Item icon={TrashIcon} title="Archive Item" />,
+  ];
+
   return (
-    <Modal title="Modify Item" actions={actions} style={{ width: 600 }} {...props}>
-      <View>
+    <Modal title="Modify Item" actions={modalActions} style={{ width: 600 }} {...props}>
+      <View style={{ minHeight: 0 }}>
         <View
           border="bottom"
           fillColor="panel"
@@ -73,12 +86,12 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
             <View spacing="8px">
               <Text>ENG-1</Text>
               <Text light fontSize="12px">
-                Updated foo
+                Updated {new Date(item.updatedAt).toLocaleDateString()}
               </Text>
             </View>
-            <Button round solid>
+            <Button.Menu solid offsetTop={8} cornerRadius="max" items={itemActions}>
               Actions
-            </Button>
+            </Button.Menu>
           </View>
           <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
             <InputField
@@ -94,7 +107,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
             </View>
           </Form>
         </View>
-        <View fillColor="content" padding="16px">
+        <View fillColor="content" padding="16px" style={{ overflowY: "auto" }}>
           <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
             <InputField
               flush
@@ -102,7 +115,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
               borderOnFocus
               border="bottom"
               name="description"
-              label="Notes"
+              label="Summary"
               placeholder="Details about this item..."
             />
             <Checklist items={criteria} onValueChange={handleCriteriaChecklistValueChange} />

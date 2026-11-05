@@ -9,6 +9,8 @@ type SelectItemListQuery = {
     statusId: StatusId;
     description: string;
     sortOrder: number;
+    createdAt: string;
+    updatedAt: string;
     flagged: boolean;
     criteria: {
       id: string;
@@ -32,6 +34,8 @@ const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
       statusId
       description
       sortOrder
+      createdAt
+      updatedAt
       flagged
       criteria
       itemsAssignees {

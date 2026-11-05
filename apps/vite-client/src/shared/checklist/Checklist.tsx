@@ -56,15 +56,15 @@ type Item = {
 
 function ChecklistItem({
   id,
+  inputElementRef,
   checkboxValue,
   inputValue,
-  initialLoad,
   onCheckboxUpdate,
   onInputUpdate,
   onItemInsert,
   onItemDelete,
 }: Item & {
-  initialLoad: boolean;
+  inputElementRef: React.Ref<HTMLInputElement>;
   onCheckboxUpdate: (id: string, value: boolean) => void;
   onInputUpdate: (id: string, value: string) => void;
   onItemInsert: (id: string, previousInputValue: string) => void;
@@ -109,10 +109,11 @@ function ChecklistItem({
       />
       <Input
         flush
-        autoFocus={!initialLoad}
+        inputRef={inputElementRef}
         borderOnFocus
         border="bottom"
         value={inputValue}
+        placeholder="When is this item considered done..."
         onKeyDown={handleInputKeyDown}
         onValueChange={handleInputValueChange}
       />
@@ -129,7 +130,7 @@ function Checklist({
   items: Item[];
   onValueChange?: (item: Item[]) => void;
 }) {
-  const [initialized, setInitialized] = useState(false);
+  const inputElementsRef = useRef(new Map());
 
   const items = [
     ...(_items.length === 0
@@ -189,6 +190,10 @@ function Checklist({
     });
 
     onValueChange?.(updatedItems);
+
+    setTimeout(() => {
+      inputElementsRef.current.get(index + 1).focus();
+    });
   };
 
   const handleItemDelete = (id: string) => {
@@ -199,21 +204,21 @@ function Checklist({
     updatedItems.splice(index, 1);
 
     onValueChange?.(updatedItems);
-  };
 
-  useEffect(() => {
     setTimeout(() => {
-      setInitialized(true);
+      inputElementsRef.current.get(index - 1).focus();
     });
-  }, []);
+  };
 
   return (
     <Label label="Criteria" spacing="4px">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <ChecklistItem
           key={item.id}
           id={item.id}
-          initialLoad={!initialized}
+          inputElementRef={(node) => {
+            inputElementsRef.current.set(index, node);
+          }}
           checkboxValue={item.checkboxValue}
           inputValue={item.inputValue}
           onCheckboxUpdate={handleItemCheckboxUpdate}
