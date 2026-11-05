@@ -1,4 +1,4 @@
-import { type Delegate, View, Text, Icon, Avatar } from "onyx-ui";
+import { type Delegate, View, Text, Icon, Avatar, Menu } from "onyx-ui";
 import { BookCheckIcon, SquareIcon } from "lucide-react";
 
 import type { UserId, ItemId, StatusId } from "../../queries";
@@ -76,16 +76,21 @@ function BacklogItem({
         </View>
       </View>
       <View horizontal align="middle justify" spacing="16px">
-        <Avatar.Stack>
-          {assignees.map((assignee) => (
-            <Avatar
-              key={assignee.id}
-              imageOnly
-              name={assignee.displayName}
-              tooltip={`Developer: ${assignee.displayName}`}
-            />
-          ))}
-        </Avatar.Stack>
+        <Menu
+          offsetTop={8}
+          items={[<Menu.Item title="Mike Austin" onClick={(event) => event.stopPropagation()} />]}
+        >
+          <Avatar.Stack>
+            {assignees.map((assignee) => (
+              <Avatar
+                key={assignee.id}
+                imageOnly
+                name={assignee.displayName}
+                tooltip={`Developer: ${assignee.displayName}`}
+              />
+            ))}
+          </Avatar.Stack>
+        </Menu>
         <View horizontal align="middle left" spacing="4px" style={{ minWidth: 90 }}>
           <Icon
             icon={SquareIcon}

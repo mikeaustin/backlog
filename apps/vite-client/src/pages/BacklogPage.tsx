@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select, List, Button, Toggle, Text } from "onyx-ui";
-import { FlagIcon, XIcon } from "lucide-react";
+import { FlagIcon, UserCircleIcon, UserIcon, XIcon } from "lucide-react";
 
 import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "../queries";
 import ItemStatuses from "../data/ItemStatuses";
@@ -98,7 +98,11 @@ function BacklogPage() {
       ],
     },
     ...selectItemListData.items.flatMap((item) =>
-      item.assignees.map((assignee) => ({ value: assignee.id, label: assignee.displayName })),
+      item.assignees.map((assignee) => ({
+        icon: UserCircleIcon,
+        value: assignee.id,
+        label: assignee.displayName,
+      })),
     ),
   ];
 
