@@ -3,13 +3,10 @@ import { type Delegate, type FieldValue } from "onyx-ui";
 import { Button, Form, Input, Menu, Modal, Select, Text, View } from "onyx-ui";
 import { FlagIcon, TrashIcon } from "lucide-react";
 
-import type { useSelectItemListQuery } from "../../queries";
-import { useUpdateItemMutation } from "../../queries";
+import { type Item, useUpdateItemMutation } from "../../queries";
 import ItemStatuses from "../../data/ItemStatuses";
 
 import Checklist from "../../shared/checklist";
-
-type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items"][number];
 
 const InputField = Form.Field.withComponent(Input);
 const SelectField = Form.Field.withComponent(Select);

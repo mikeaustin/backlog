@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { type FieldValue, View, Page, Form, Select, List, Button, Toggle, Text } from "onyx-ui";
-import { FlagIcon, UserCircleIcon, UserIcon, XIcon } from "lucide-react";
+import { FlagIcon, UserCircleIcon, XIcon } from "lucide-react";
 
-import { type ItemId, useSelectItemListQuery, useUpdateItemMutation } from "../queries";
+import { type ItemId } from "../queries/types";
+import { useSelectItemListQuery, useUpdateItemMutation } from "../queries";
 import ItemStatuses from "../data/ItemStatuses";
 
 import BacklogItem from "../components/backlog-item";

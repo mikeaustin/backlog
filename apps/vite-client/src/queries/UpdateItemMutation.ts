@@ -1,20 +1,7 @@
 import { gql, useMutation, type AnyVariables } from "urql";
 
-import type { ItemId, StatusId, TeamKeySeqId } from ".";
-
-type Item = {
-  id: ItemId;
-  title: string;
-  statusId: StatusId;
-  description: string;
-  sortOrder: number;
-  flagged: boolean;
-  criteria: {
-    id: string;
-    checkboxValue: boolean;
-    inputValue: string;
-  }[];
-};
+import type { ItemId, Item } from "./types";
+import { ITEM_FRAGMENT } from "./fragments";
 
 type UpdateItemMutation = {
   update_items_by_pk: Item;
@@ -23,23 +10,10 @@ type UpdateItemMutation = {
 const UPDATE_ITEM_MUTATION = gql<UpdateItemMutation>`
   mutation UpdateItem($id: uuid!, $input: items_set_input) {
     update_items_by_pk(_set: $input, pk_columns: { id: $id }) {
-      id
-      title
-      statusId
-      description
-      sortOrder
-      flagged
-      criteria
-      itemsAssignees {
-        itemId
-        userId
-        assignee {
-          id
-          displayName
-        }
-      }
+      ...ItemFragment
     }
   }
+  ${ITEM_FRAGMENT}
 `;
 
 function useUpdateItemMutation() {

@@ -1,53 +1,19 @@
 import { gql, useQuery } from "urql";
 
-import type { UserId, ItemId, StatusId, TeamKeySeqId } from ".";
+import type { Item } from "./types";
+import { ITEM_FRAGMENT } from "./fragments";
 
 type SelectItemListQuery = {
-  items: {
-    id: ItemId;
-    title: string;
-    statusId: StatusId;
-    description: string;
-    sortOrder: number;
-    createdAt: string;
-    updatedAt: string;
-    flagged: boolean;
-    criteria: {
-      id: string;
-      checkboxValue: boolean;
-      inputValue: string;
-    }[];
-    itemsAssignees: {
-      assignee: {
-        id: UserId;
-        displayName: string;
-      };
-    }[];
-  }[];
+  items: Item[];
 };
 
 const SELECT_ITEM_LIST_QUERY = gql<SelectItemListQuery>`
   query SelectItemList {
     items(order_by: { sortOrder: asc }) {
-      id
-      title
-      statusId
-      description
-      sortOrder
-      createdAt
-      updatedAt
-      flagged
-      criteria
-      itemsAssignees {
-        itemId
-        userId
-        assignee {
-          id
-          displayName
-        }
-      }
+      ...ItemFragment
     }
   }
+  ${ITEM_FRAGMENT}
 `;
 
 function useSelectItemListQuery() {

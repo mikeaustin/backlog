@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 
-import type { ItemId } from "./queries";
+import type { ItemId } from "./queries/types";
 
 import styles from "./App.module.css";
 

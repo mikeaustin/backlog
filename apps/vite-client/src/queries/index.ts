@@ -1,32 +1,18 @@
-type UserId = string & { readonly __type: unique symbol };
-
-type ItemId = string & { readonly __type: unique symbol };
-type TeamKeySeqId = string & { readonly __type: unique symbol };
-
-type StatusId = "BACKLOG" | "IN_PROGRESS" | "DONE";
-
-type Item = {
-  id: ItemId;
-  title: string;
-  statusId: StatusId;
-  sortOrder: number;
-  flagged: boolean;
-  itemsAssignees: {
-    assignee: {
-      id: UserId;
-      displayName: string;
-    };
-  }[];
-};
+import type useSelectItemListQuery from "./SelectItemListQuery";
 
 export { default as useSelectItemListQuery } from "./SelectItemListQuery";
 export { default as useUpdateItemMutation } from "./UpdateItemMutation";
 
-export type {
-  UserId,
-  ItemId,
-  StatusId,
-  TeamKeySeqId,
-  //
-  Item,
-};
+type User = Exclude<
+  ReturnType<typeof useSelectItemListQuery>,
+  undefined
+>["items"][number]["assignees"][number];
+
+type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items"][number];
+
+type Criterion = Exclude<
+  ReturnType<typeof useSelectItemListQuery>,
+  undefined
+>["items"][number]["criteria"][number];
+
+export type { User, Item, Criterion };

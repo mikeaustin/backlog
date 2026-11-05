@@ -1,7 +1,8 @@
 import { type Delegate, View, Text, Icon, Avatar, Menu } from "onyx-ui";
 import { BookCheckIcon, SquareIcon } from "lucide-react";
 
-import type { UserId, ItemId, StatusId } from "../../queries";
+import type { ItemId, StatusId } from "../../queries/types";
+import type { Criterion, User } from "../../queries";
 import ItemStatuses from "../../data/ItemStatuses";
 import { useSortable } from "../../hooks";
 
@@ -38,8 +39,8 @@ function BacklogItem({
     statusId: StatusId;
     sortOrder: number;
     flagged: boolean;
-    criteria: { checkboxValue: boolean }[];
-    assignees: { id: UserId; displayName: string }[];
+    criteria: Criterion[];
+    assignees: User[];
     sourceElementRef: React.RefObject<HTMLElement | null>;
     onItemSelect?: (id: ItemId) => void;
     onItemMove?: (
