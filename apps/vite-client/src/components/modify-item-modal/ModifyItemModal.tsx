@@ -14,6 +14,14 @@ type Item = Exclude<ReturnType<typeof useSelectItemListQuery>, undefined>["items
 const InputField = Form.Field.withComponent(Input);
 const SelectField = Form.Field.withComponent(Select);
 
+function Flag() {
+  return (
+    <svg height="16" width="16" style={{ position: "absolute", left: 0, top: 0 }}>
+      <polygon points="0,0 16,0 0,16" style={{ fill: "var(--onyx-red-4)", strokeWidth: 3 }} />
+    </svg>
+  );
+}
+
 const itemStatusSelectOptions = [...Object.values(ItemStatuses)] as const;
 
 function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Modal, "title">) {
@@ -82,6 +90,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
           spacing="16px"
           style={{ paddingBottom: 8 }}
         >
+          {itemFields.flagged && <Flag />}
           <View horizontal align="middle justify">
             <View spacing="8px">
               <Text>ENG-1</Text>
