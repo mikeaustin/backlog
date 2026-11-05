@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Delegate, type FieldValue } from "onyx-ui";
+import { Text, type Delegate, type FieldValue } from "onyx-ui";
 import { Button, Form, Input, Modal, Select, View } from "onyx-ui";
 
 import type { useSelectItemListQuery } from "../../queries";
@@ -50,24 +50,39 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
 
   return (
     <Modal title="Modify Item" actions={actions} {...props}>
-      <Form fields={itemFields} onFieldChange={handleItemFormFieldChange}>
+      <View>
         <View border="bottom" fillColor="panel" padding="16px" spacing="16px">
-          <InputField
-            flush
-            borderOnFocus
-            border="bottom"
-            multiline
-            name="title"
-            innerStyle={{ fontSize: 18 }}
-          />
-          <View horizontal>
-            <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
+          <View horizontal align="middle justify">
+            <View spacing="8px">
+              <Text>ENG-1</Text>
+              <Text light fontSize="12px">
+                Updated foo
+              </Text>
+            </View>
+            <Button round solid>
+              Actions
+            </Button>
           </View>
+          <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
+            <InputField
+              flush
+              borderOnFocus
+              border="bottom"
+              multiline
+              name="title"
+              innerStyle={{ fontSize: 18 }}
+            />
+            <View horizontal>
+              <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
+            </View>
+          </Form>
         </View>
         <View fillColor="content" padding="16px">
-          <InputField name="description" label="Description" style={{ height: 30 }} />
+          <Form fields={itemFields} onFieldChange={handleItemFormFieldChange}>
+            <InputField name="description" label="Description" style={{ height: 30 }} />
+          </Form>
         </View>
-      </Form>
+      </View>
     </Modal>
   );
 }
