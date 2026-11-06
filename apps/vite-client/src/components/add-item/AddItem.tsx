@@ -10,6 +10,14 @@ function AddItem() {
 
   const createItem = useCreateItemMutation();
 
+  const handleInputChange = (event: React.InputEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+
+    if (target.value) {
+      target.value = target.value.at(0)?.toUpperCase() + target.value.slice(1);
+    }
+  };
+
   const handleItemFormFieldChange = (name: string, value: FieldValue) => {
     setItemFormFields((itemFormFields) => ({
       ...itemFormFields,
@@ -20,16 +28,18 @@ function AddItem() {
   const handleItemFormSubmit = (event: React.SubmitEvent) => {
     event.preventDefault();
 
-    createItem({
-      input: {
-        statusId: "BACKLOG",
-        title: itemFormFields.title,
-      },
-    });
+    if (itemFormFields.title) {
+      createItem({
+        input: {
+          statusId: "BACKLOG",
+          title: itemFormFields.title,
+        },
+      });
 
-    setItemFormFields({
-      title: "",
-    });
+      setItemFormFields({
+        title: "",
+      });
+    }
   };
 
   return (
@@ -40,7 +50,13 @@ function AddItem() {
         onSubmit={handleItemFormSubmit}
       >
         <View horizontal padding="12px 16px" spacing="8px">
-          <InputField borderOnFocus border="bottom" name="title" placeholder="Add an item..." />
+          <InputField
+            borderOnFocus
+            border="bottom"
+            name="title"
+            placeholder="Add an item..."
+            onInput={handleInputChange}
+          />
           <Button round primary type="submit">
             Add Item
           </Button>
