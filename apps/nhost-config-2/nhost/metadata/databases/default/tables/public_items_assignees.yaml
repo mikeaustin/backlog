@@ -1,0 +1,27 @@
+table:
+  name: items_assignees
+  schema: public
+configuration:
+  column_config:
+    item_id:
+      custom_name: itemId
+    user_id:
+      custom_name: userId
+  custom_column_names:
+    item_id: itemId
+    user_id: userId
+  custom_root_fields: {}
+object_relationships:
+  - name: assignee
+    using:
+      foreign_key_constraint_on: user_id
+  - name: item
+    using:
+      foreign_key_constraint_on: item_id
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - item_id
+        - user_id
+      filter: {}
