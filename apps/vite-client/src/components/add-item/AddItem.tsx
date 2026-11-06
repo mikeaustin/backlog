@@ -7,11 +7,14 @@ const InputField = Form.Field.withComponent(Input);
 
 function AddItem() {
   const [itemFormFields, setItemFormFields] = useState({ title: "" });
+  const [value, setValue] = useState("");
 
   const createItem = useCreateItemMutation();
 
   const handleInputChange = (event: React.InputEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
+
+    setValue(target.value);
 
     if (target.value) {
       target.value = target.value.at(0)?.toUpperCase() + target.value.slice(1);
@@ -57,7 +60,7 @@ function AddItem() {
             placeholder="Add an item..."
             onInput={handleInputChange}
           />
-          <Button round primary type="submit">
+          <Button round primary type="submit" disabled={!value}>
             Add Item
           </Button>
         </View>
