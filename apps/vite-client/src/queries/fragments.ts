@@ -4,6 +4,7 @@ const ITEM_FRAGMENT = gql`
   fragment ItemFragment on items {
     id
     title
+    seqId
     statusId
     description
     sortOrder

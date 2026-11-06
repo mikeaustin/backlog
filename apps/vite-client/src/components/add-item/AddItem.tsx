@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, View, type FieldValue } from "onyx-ui";
 
-import useCreateItemMutation from "../../queries/CreateItemMutation";
+import { useCreateItemMutation, useUpdateItemMutation } from "../../queries";
 
 const InputField = Form.Field.withComponent(Input);
 
@@ -10,6 +10,7 @@ function AddItem() {
   const [value, setValue] = useState("");
 
   const createItem = useCreateItemMutation();
+  const updateItem = useUpdateItemMutation();
 
   const handleInputChange = (event: React.InputEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -28,20 +29,31 @@ function AddItem() {
     }));
   };
 
-  const handleItemFormSubmit = (event: React.SubmitEvent) => {
+  const handleItemFormSubmit = async (event: React.SubmitEvent) => {
     event.preventDefault();
 
     if (itemFormFields.title) {
-      createItem({
+      const item = await createItem({
         input: {
           statusId: "BACKLOG",
           title: itemFormFields.title,
         },
       });
 
+      console.log(item.data?.insert_items_one.seqId);
+
+      updateItem({
+        id: item.data?.insert_items_one.id!,
+        input: {
+          sortOrder: item.data?.insert_items_one.seqId,
+        },
+      });
+
       setItemFormFields({
         title: "",
       });
+
+      setValue("");
     }
   };
 

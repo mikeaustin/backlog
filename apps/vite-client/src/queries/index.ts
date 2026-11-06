@@ -1,6 +1,7 @@
 import type useSelectItemListQuery from "./SelectItemListQuery";
 
 export { default as useSelectItemListQuery } from "./SelectItemListQuery";
+export { default as useCreateItemMutation } from "./CreateItemMutation";
 export { default as useUpdateItemMutation } from "./UpdateItemMutation";
 
 type User = Exclude<

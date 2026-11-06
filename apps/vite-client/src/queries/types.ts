@@ -1,10 +1,12 @@
 type UserId = string & { readonly __type: unique symbol };
 type ItemId = string & { readonly __type: unique symbol };
+
 type StatusId = "BACKLOG" | "IN_PROGRESS" | "DONE";
 
 type Item = {
   id: ItemId;
   title: string;
+  seqId: number;
   statusId: StatusId;
   description: string;
   sortOrder: number;
