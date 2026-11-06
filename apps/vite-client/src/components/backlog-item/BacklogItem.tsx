@@ -24,6 +24,7 @@ function Flag() {
 function BacklogItem({
   id,
   title,
+  seqId,
   statusId,
   sortOrder,
   flagged,
@@ -36,6 +37,7 @@ function BacklogItem({
   {
     id: ItemId;
     title: string;
+    seqId: string;
     statusId: StatusId;
     sortOrder: number;
     flagged: boolean;
@@ -74,7 +76,7 @@ function BacklogItem({
         <View horizontal align="middle left" spacing="4px">
           <Icon bleed icon={BookCheckIcon} size={14} />
           <Text light bold fontSize="12px">
-            {sortOrder}
+            ENG-{seqId} &nbsp; {sortOrder}
           </Text>
         </View>
       </View>
