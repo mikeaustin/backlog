@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Delegate, type FieldValue } from "onyx-ui";
+import { Avatar, Label, type Delegate, type FieldValue } from "onyx-ui";
 import { Button, Form, Input, Menu, Select, Text, View } from "onyx-ui";
 import { FlagIcon, TrashIcon } from "lucide-react";
 
@@ -113,6 +113,18 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
               <SelectField name="statusId" label="Status" options={itemStatusSelectOptions} />
             </View>
           </Form>
+        </View>
+        <View border="bottom" fillColor="gutter" padding="16px">
+          <Label horizontal label="Developers" spacing="16px">
+            {item.assignees.map((assignee) => (
+              <Avatar
+                key={assignee.id}
+                imageFillColor="divider"
+                name={assignee.displayName}
+                label={assignee.metadata?.roleLabel}
+              />
+            ))}
+          </Label>
         </View>
         <View fillColor="content" padding="16px" style={{ overflowY: "auto" }}>
           <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>

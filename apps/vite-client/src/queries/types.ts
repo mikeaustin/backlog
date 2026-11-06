@@ -26,6 +26,9 @@ type Item = {
 type User = {
   id: UserId;
   displayName: string;
+  metadata?: {
+    roleLabel?: string;
+  };
 };
 
 export type { UserId, ItemId, StatusId, Item };

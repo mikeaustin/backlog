@@ -18,6 +18,7 @@ const ITEM_FRAGMENT = gql`
       assignee {
         id
         displayName
+        metadata
       }
     }
   }
