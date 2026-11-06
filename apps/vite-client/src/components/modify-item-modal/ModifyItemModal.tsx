@@ -74,7 +74,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
       onClick={() => handleItemFormFieldChange("flagged", !item.flagged)}
     />,
     <Menu.Divider />,
-    <Menu.Item icon={TrashIcon} title="Archive Item" />,
+    <Menu.Item disabled icon={TrashIcon} title="Archive Item" />,
   ];
 
   return (
