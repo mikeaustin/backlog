@@ -1,0 +1,75 @@
+@keyframes slideIn {
+  0% {
+    transform: scale(0.95, 0.95);
+    opacity: 0;
+  }
+
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.Overlay {
+  inset: 0;
+  pointer-events: all;
+  background: hsla(0, 0%, 50%, 0.25) !important;
+  animation: 0.3s fadeIn forwards;
+
+  &.close {
+    animation: 0.3s fadeOut forwards;
+  }
+}
+
+.Modal {
+  min-width: min(100vw, 440px);
+  max-width: min(100vw, 1920px);
+  max-height: 100vh;
+  pointer-events: all;
+  overflow: clip;
+  box-shadow:
+    0 4px 16px hsla(0, 0%, 0%, 0.25),
+    0 0 1px hsla(0, 0%, 0%, 0.5);
+  animation: 0.3s slideIn forwards;
+  transform-origin: top;
+
+  &.close {
+    animation: 0.3s slideOut forwards;
+  }
+}
+
+:root[data-theme="dark"] .Modal {
+  box-shadow:
+    0 4px 16px hsla(0, 0%, 0%, 0.5),
+    0 0 1px hsla(0, 0%, 100%, 1);
+}
