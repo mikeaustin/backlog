@@ -53,9 +53,9 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     updateItem({
       id: item.id,
       input: {
-        title: itemFields.title,
+        title: itemFields.title.trim(),
         statusId: itemFields.statusId,
-        description: itemFields.description,
+        description: itemFields.description.trim(),
         flagged: itemFields.flagged,
         criteria: criteria,
       },
@@ -79,7 +79,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   ];
 
   return (
-    <Modal title="Modify Item" actions={modalActions} style={{ width: 600 }} {...props}>
+    <Modal title="Modify Item" actions={modalActions} style={{ width: 700 }} {...props}>
       <View style={{ minHeight: 0 }}>
         <View
           border="bottom"
@@ -114,31 +114,33 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
             </View>
           </Form>
         </View>
-        <View border="bottom" fillColor="gutter" padding="16px">
-          <Label horizontal label="Developers" spacing="16px">
-            {item.assignees.map((assignee) => (
-              <Avatar
-                key={assignee.id}
-                imageFillColor="divider"
-                name={assignee.displayName}
-                label={assignee.metadata?.roleLabel}
+        <View style={{ overflowY: "auto" }}>
+          <View border="bottom" fillColor="gutter" padding="16px">
+            <Label horizontal label="Developers" spacing="16px">
+              {item.assignees.map((assignee) => (
+                <Avatar
+                  key={assignee.id}
+                  imageFillColor="divider"
+                  name={assignee.displayName}
+                  label={assignee.metadata?.roleLabel}
+                />
+              ))}
+            </Label>
+          </View>
+          <View fillColor="content" padding="16px">
+            <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
+              <InputField
+                flush
+                multiline
+                borderOnFocus
+                border="bottom"
+                name="description"
+                label="Summary"
+                placeholder="Details about this item..."
               />
-            ))}
-          </Label>
-        </View>
-        <View fillColor="content" padding="16px" style={{ overflowY: "auto" }}>
-          <Form fields={itemFields} spacing="16px" onFieldChange={handleItemFormFieldChange}>
-            <InputField
-              flush
-              multiline
-              borderOnFocus
-              border="bottom"
-              name="description"
-              label="Summary"
-              placeholder="Details about this item..."
-            />
-            <Checklist items={criteria} onValueChange={handleCriteriaChecklistValueChange} />
-          </Form>
+              <Checklist items={criteria} onValueChange={handleCriteriaChecklistValueChange} />
+            </Form>
+          </View>
         </View>
       </View>
     </Modal>

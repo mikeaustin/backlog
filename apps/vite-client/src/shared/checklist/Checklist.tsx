@@ -158,7 +158,7 @@ function Checklist({
   };
 
   const handleItemInputUpdate = (id: string, value: string) => {
-    console.log("handleItemInputUpdate");
+    console.log("handleItemInputUpdate", value);
 
     const index = items.findIndex((item) => item.id === id);
 
