@@ -35,8 +35,8 @@ function AddItem() {
     if (itemFormFields.title) {
       const item = await createItem({
         input: {
-          statusId: "BACKLOG",
           title: itemFormFields.title,
+          statusId: "BACKLOG",
         },
       });
 

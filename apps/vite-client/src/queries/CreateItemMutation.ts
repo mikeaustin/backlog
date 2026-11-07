@@ -8,7 +8,14 @@ type CreateItemMutation = {
   insert_items_one: Item;
 };
 
-const CREATE_ITEM_MUTATION = gql<CreateItemMutation>`
+type CreateItemMutationInput = {
+  input: {
+    title: string;
+    statusId: string;
+  };
+};
+
+const CREATE_ITEM_MUTATION = gql<CreateItemMutation, CreateItemMutationInput>`
   mutation CreateItem($input: items_insert_input!) {
     insert_items_one(object: $input) {
       ...ItemFragment
@@ -26,18 +33,18 @@ function useCreateItemMutation2() {
 function useCreateItemMutation() {
   const [_, createItem] = useMutation(CREATE_ITEM_MUTATION);
 
-  return (variables: AnyVariables, context?: Partial<OperationContext>) => {
+  return (variables: Parameters<typeof createItem>[0], context?: Partial<OperationContext>) => {
     const items = JSON.parse(localStorage.getItem("items") ?? "[]");
 
     const seqId = Math.random();
 
-    // new OfflineItem(variables)
+    new OfflineItem(variables.input);
 
     items.push({
       id: crypto.randomUUID(),
-      title: variables?.title,
+      title: variables.input.title,
+      statusId: variables.input.statusId,
       seqId: seqId,
-      statusId: variables?.statusId,
       description: "",
       sortSorder: seqId,
       createdAt: new Date().toISOString(),

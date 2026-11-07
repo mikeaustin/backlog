@@ -5,7 +5,7 @@ class OfflineItem {
   id: string = crypto.randomUUID();
   title: string;
   seqId: number = Math.random();
-  statusId: "BACKLOG" | "IN_PROGRESS" | "DONE";
+  statusId: string;
   description: string = "";
   sortOrder: number;
   createdAt: string = new Date().toISOString();
