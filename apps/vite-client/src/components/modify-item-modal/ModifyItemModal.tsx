@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Avatar, Label, type Delegate, type FieldValue } from "onyx-ui";
-import { Button, Form, Input, Menu, Select, Text, View } from "onyx-ui";
+import { type Delegate, type FieldValue } from "onyx-ui";
+import { Avatar, Button, Form, Input, Label, Menu, Select, Text, View } from "onyx-ui";
 import { FlagIcon, PlusIcon, TrashIcon } from "lucide-react";
 
-import { type Item, useUpdateItemMutation } from "../../queries";
-import useSelectUserListQuery from "../../queries/SelectUsersQuery";
+import { type Item, useSelectUserListQuery, useUpdateItemMutation } from "../../queries";
 import ItemStatuses from "../../data/ItemStatuses";
 
 import Checklist from "../../shared/checklist";
@@ -65,6 +64,8 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     });
   };
 
+  //
+
   const modalActions = [
     <Button round solid primary onClick={handleSaveChangesClick}>
       Save Changes
@@ -81,15 +82,12 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     <Menu.Item disabled icon={TrashIcon} title="Archive Item" />,
   ];
 
-  const assigneesMenuItems =
-    selectUserListData &&
-    (selectUserListData.users.map((user) => (
-      <Menu.Item
-        key={user.id}
-        title={<Avatar name={user.displayName} label={user.metadata?.roleLabel} />}
-      />
-    )) ||
-      []);
+  const assigneesMenuItems = selectUserListData?.users.map((user) => (
+    <Menu.Item
+      key={user.id}
+      title={<Avatar name={user.displayName} label={user.metadata?.roleLabel} />}
+    />
+  ));
 
   return (
     <Modal title="Modify Item" actions={modalActions} style={{ width: 700 }} {...props}>

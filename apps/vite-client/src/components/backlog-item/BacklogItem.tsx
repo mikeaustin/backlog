@@ -37,7 +37,7 @@ function BacklogItem({
   {
     id: ItemId;
     title: string;
-    seqId: string;
+    seqId: number;
     statusId: StatusId;
     sortOrder: number;
     flagged: boolean;
