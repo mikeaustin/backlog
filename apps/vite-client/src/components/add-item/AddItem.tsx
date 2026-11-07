@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, View, type FieldValue } from "onyx-ui";
 
+import type { ItemId } from "../../queries/types";
 import { useCreateItemMutation, useUpdateItemMutation } from "../../queries";
 
 const InputField = Form.Field.withComponent(Input);
@@ -43,7 +44,7 @@ function AddItem() {
       console.log(item.data?.insert_items_one.seqId);
 
       updateItem({
-        id: item.data?.insert_items_one.id!,
+        id: item.data?.insert_items_one.id as ItemId,
         input: {
           sortOrder: item.data?.insert_items_one.seqId,
         },
