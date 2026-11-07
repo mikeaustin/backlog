@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Avatar, Label, type Delegate, type FieldValue } from "onyx-ui";
 import { Button, Form, Input, Menu, Select, Text, View } from "onyx-ui";
-import { FlagIcon, TrashIcon } from "lucide-react";
+import { FlagIcon, PlusIcon, TrashIcon } from "lucide-react";
 
 import { type Item, useUpdateItemMutation } from "../../queries";
+import useSelectUserListQuery from "../../queries/SelectUsersQuery";
 import ItemStatuses from "../../data/ItemStatuses";
 
 import Checklist from "../../shared/checklist";
@@ -31,7 +32,9 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
   });
 
   const [criteria, setCriteria] = useState<Item["criteria"]>(item.criteria);
+  const [isUsersSelectOpen, setIsUsersSelectOpen] = useState(false);
 
+  const selectUserListData = useSelectUserListQuery({ pause: !isUsersSelectOpen });
   const updateItem = useUpdateItemMutation();
 
   //
@@ -78,6 +81,16 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
     <Menu.Item disabled icon={TrashIcon} title="Archive Item" />,
   ];
 
+  const assigneesMenuItems =
+    selectUserListData &&
+    (selectUserListData.users.map((user) => (
+      <Menu.Item
+        key={user.id}
+        title={<Avatar name={user.displayName} label={user.metadata?.roleLabel} />}
+      />
+    )) ||
+      []);
+
   return (
     <Modal title="Modify Item" actions={modalActions} style={{ width: 700 }} {...props}>
       <View style={{ minHeight: 0 }}>
@@ -114,6 +127,7 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
             </View>
           </Form>
         </View>
+        {/*  */}
         <View style={{ overflowY: "auto" }}>
           <View border="bottom" fillColor="gutter" padding="16px">
             <Label horizontal label="Developers" spacing="16px">
@@ -125,6 +139,13 @@ function ModifyItemModal({ item, ...props }: Delegate<{ item: Item }, typeof Mod
                   label={assignee.metadata?.roleLabel}
                 />
               ))}
+              <Menu
+                offsetTop={8}
+                items={assigneesMenuItems || []}
+                onVisibilityChange={(visible) => setIsUsersSelectOpen(visible)}
+              >
+                <Button round icon={PlusIcon} />
+              </Menu>
             </Label>
           </View>
           <View fillColor="content" padding="16px">

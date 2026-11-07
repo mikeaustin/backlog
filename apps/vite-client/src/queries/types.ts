@@ -3,6 +3,14 @@ type ItemId = string & { readonly __type: unique symbol };
 
 type StatusId = "BACKLOG" | "IN_PROGRESS" | "DONE";
 
+type User = {
+  id: UserId;
+  displayName: string;
+  metadata?: {
+    roleLabel?: string;
+  };
+};
+
 type Item = {
   id: ItemId;
   title: string;
@@ -23,12 +31,4 @@ type Item = {
   }[];
 };
 
-type User = {
-  id: UserId;
-  displayName: string;
-  metadata?: {
-    roleLabel?: string;
-  };
-};
-
-export type { UserId, ItemId, StatusId, Item };
+export type { UserId, ItemId, StatusId, User, Item };
