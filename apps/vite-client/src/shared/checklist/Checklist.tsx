@@ -1,50 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Icon, Input, Label, View, type Delegate } from "onyx-ui";
-import { CheckIcon } from "lucide-react";
-
-function Checkbox({
-  value,
-  icon,
-  fillColor = "primary",
-  tabIndex,
-  onValueChange,
-}: Delegate<
-  {
-    value?: boolean;
-    icon?: React.ComponentProps<typeof Icon>["icon"];
-    onValueChange?: (value: boolean) => void;
-  },
-  typeof View<"input">,
-  "onClick"
->) {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onValueChange?.(event.currentTarget.checked);
-  };
-
-  const checkboxFillColor = value ? fillColor : undefined;
-
-  return (
-    <View horizontal opacityOnPress as="label" spacing="8px" align="middle left">
-      <View
-        border={!value}
-        borderColor="gray-4"
-        fillColor={checkboxFillColor}
-        cornerRadius="2px"
-        align="middle center"
-        style={{ width: 24, height: 24 }}
-      >
-        <View
-          as="input"
-          type="checkbox"
-          tabIndex={tabIndex}
-          checked={value}
-          onChange={handleChange}
-        />
-        {value && <Icon icon={icon ?? CheckIcon} size={20} color="white" />}
-      </View>
-    </View>
-  );
-}
+import { useRef } from "react";
+import { Checkbox, Input, Label, View } from "onyx-ui";
 
 //
 
